@@ -94,7 +94,9 @@
     <Compile Include="Input\KeyboardEx.cs" />
     <Compile Include="Input\MouseEx.cs" />
     <Compile Include="Interaction\ActionTimer.cs" />
+    <Compile Include="Interaction\InputType.cs" />
     <Compile Include="Interaction\Storyboard.cs" />
+    <Compile Include="Interaction\StringInputController.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
