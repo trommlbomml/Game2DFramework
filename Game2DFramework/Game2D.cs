@@ -31,6 +31,7 @@ namespace Game2DFramework
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
         public Camera Camera { get; private set; }
         public ScriptRunner ScriptRunner { get; private set; }
+        public Cursor Cursor { get; private set; }
 
         public GamePadEx GamePad
         {
@@ -59,6 +60,7 @@ namespace Game2DFramework
             Mouse = new MouseEx();
             DepthRenderer = new DepthRenderer();
             ScriptRunner = new ScriptRunner(this);
+            Cursor =  new Cursor(this);
             if (useGamePad) GamePad = new GamePadEx();
 
             _clearOptions = ClearOptions.Target;
@@ -114,6 +116,7 @@ namespace Game2DFramework
             RegisterTransition(new SlideTransition(GraphicsDevice));
             RegisterTransition(new CardTransition(GraphicsDevice));
             RegisterTransition(new ThrowAwayTransition(GraphicsDevice));
+            RegisterTransition(new ZappoutTransition(GraphicsDevice));
 
             _startupState = RegisterStates();
             Camera = new Camera(this);
@@ -139,6 +142,8 @@ namespace Game2DFramework
         protected override void Update(GameTime gameTime)
         {
             var elapsedTime = gameTime.ElapsedGameTime.Milliseconds*0.001f;
+
+            Cursor.Update();
 
             if (_startupState != null)
             {

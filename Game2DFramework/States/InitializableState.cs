@@ -1,5 +1,6 @@
 ﻿
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework.States
 {
@@ -24,5 +25,7 @@ namespace Game2DFramework.States
         public abstract void OnLeave();
         public abstract StateChangeInformation OnUpdate(float elapsedTime);
         public abstract void OnDraw(float elapsedTime);
+        
+        public RenderTarget2D TransitionRenderTarget { get; set; }
     }
 }

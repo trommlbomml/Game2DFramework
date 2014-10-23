@@ -133,10 +133,11 @@ namespace Game2DFramework
             return true;
         }
 
-        private void DrawState(float elapsedTime, IState toRender)
+        private void DrawState(float elapsedTime, IState toRender, bool drawCursor = true)
         {
             Game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Game.Camera.WorldMatrix);
             toRender.OnDraw(elapsedTime);
+            if (drawCursor) Game.Cursor.Draw();
             Game.SpriteBatch.End();
         }
 
@@ -144,13 +145,15 @@ namespace Game2DFramework
         {
             Game.GraphicsDevice.SetRenderTarget(_sourceRenderTarget);
             Game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
-            DrawState(elapsedTime, _oldStateForSourceTransition);
+            DrawState(elapsedTime, _oldStateForSourceTransition, false);
 
             if (_currentState != null)
             {
                 Game.GraphicsDevice.SetRenderTarget(_targetRenderTarget);
                 Game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
-                DrawState(elapsedTime, _currentState);
+                _currentState.TransitionRenderTarget = _targetRenderTarget;
+                DrawState(elapsedTime, _currentState, false);
+                _currentState.TransitionRenderTarget = null;
             }
 
             Game.GraphicsDevice.SetRenderTarget(null);
@@ -170,6 +173,7 @@ namespace Game2DFramework
                 Game.GraphicsDevice.Clear(_clearOptions, Color.Black, 1.0f, 0);
                 Game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null);
                 _currentTransition.Render(Game.SpriteBatch);
+                Game.Cursor.Draw();
                 Game.SpriteBatch.End();
             }
             else if (_currentState != null)

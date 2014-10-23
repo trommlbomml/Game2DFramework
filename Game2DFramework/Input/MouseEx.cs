@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 
 namespace Game2DFramework.Input
 {
@@ -11,6 +7,9 @@ namespace Game2DFramework.Input
         private MouseState _lastMouseState;
         private MouseState _currentMouseState;
         private float _elapsedLeftButtonDownTime;
+
+        public float X { get; private set; }
+        public float Y { get; private set; }
 
         public MouseEx()
         {
@@ -22,6 +21,8 @@ namespace Game2DFramework.Input
             _elapsedLeftButtonDownTime += elapsedTime;
             _lastMouseState = _currentMouseState;
             _currentMouseState = Mouse.GetState();
+            X = _currentMouseState.X;
+            Y = _currentMouseState.Y;
         }
 
         public bool IsLeftButtonDown()
