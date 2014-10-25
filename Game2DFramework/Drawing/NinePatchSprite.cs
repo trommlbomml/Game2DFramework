@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game2DFramework.Gui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -32,6 +33,9 @@ namespace Game2DFramework.Drawing
         public NinePatchSprite(Texture2D texture, Rectangle? sourceRectangle, int horizontalBorder, int verticalBorder)
             : this(texture, sourceRectangle, horizontalBorder, verticalBorder, horizontalBorder, verticalBorder) { }
 
+        public NinePatchSprite(Texture2D texture, Rectangle? sourceRectangle, Thickness border) :
+            this(texture, sourceRectangle, border.Left, border.Right, border.Top, border.Bottom) { }
+
         public NinePatchSprite(Texture2D texture, Rectangle? sourceRectangle, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
         {
             _texture = texture;
@@ -42,7 +46,13 @@ namespace Game2DFramework.Drawing
             _bottomBorder = bottomBorder;
             _commulativeFixedWidth = _leftBorder + _rightBorder;
             _commulativeFixedHeight = _topBorder + _bottomBorder;
+            MinSize = new Rectangle(0,0, _commulativeFixedWidth, _commulativeFixedHeight);
+            FixedBorder = new Thickness(leftBorder, topBorder, rightBorder, bottomBorder);
         }
+
+        public Rectangle MinSize { get; private set; }
+        public Rectangle Bounds { get; private set; }
+        public Thickness FixedBorder { get; private set; }
 
         public void AddPatchField(Rectangle source, Rectangle target)
         {
@@ -119,10 +129,9 @@ namespace Game2DFramework.Drawing
             target.X += innerTargetWidth;
             target.Width = _rightBorder;
             if (target.Width > 0 && target.Height > 0) AddPatchField(source, target);
-        }
 
-        public int CommulativeFixedWidth { get { return _commulativeFixedWidth; } }
-        public int CommulativeFixedHeight { get { return _commulativeFixedHeight; } }
+            Bounds = bounds;
+        }
 
         public void Draw(SpriteBatch spriteBatch, Color color)
         {

@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game2DFramework", "Game2DFramework\Game2DFramework.csproj", "{3943E03F-8B56-41EB-87D0-F6C962C7D952}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game2DFramework.TestGame", "Game2DFramework.TestGame\Game2DFramework.TestGame\Game2DFramework.TestGame.csproj", "{05828A00-E9C9-4B97-840A-DD5CAB21C487}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Game2DFramework.TestGameContent", "Game2DFramework.TestGame\Game2DFramework.TestGameContent\Game2DFramework.TestGameContent.contentproj", "{72EAEB2C-DAC5-4345-A74B-62630DFF7BFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +17,12 @@ Global
 		{3943E03F-8B56-41EB-87D0-F6C962C7D952}.Debug|x86.Build.0 = Debug|x86
 		{3943E03F-8B56-41EB-87D0-F6C962C7D952}.Release|x86.ActiveCfg = Release|x86
 		{3943E03F-8B56-41EB-87D0-F6C962C7D952}.Release|x86.Build.0 = Release|x86
+		{05828A00-E9C9-4B97-840A-DD5CAB21C487}.Debug|x86.ActiveCfg = Debug|x86
+		{05828A00-E9C9-4B97-840A-DD5CAB21C487}.Debug|x86.Build.0 = Debug|x86
+		{05828A00-E9C9-4B97-840A-DD5CAB21C487}.Release|x86.ActiveCfg = Release|x86
+		{05828A00-E9C9-4B97-840A-DD5CAB21C487}.Release|x86.Build.0 = Release|x86
+		{72EAEB2C-DAC5-4345-A74B-62630DFF7BFB}.Debug|x86.ActiveCfg = Debug|x86
+		{72EAEB2C-DAC5-4345-A74B-62630DFF7BFB}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

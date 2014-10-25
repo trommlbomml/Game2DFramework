@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game2DFramework.Cameras;
 using Game2DFramework.Drawing;
+using Game2DFramework.Gui;
 using Game2DFramework.Input;
 using Game2DFramework.Scripting;
 using Game2DFramework.States;
@@ -32,6 +33,7 @@ namespace Game2DFramework
         public Camera Camera { get; private set; }
         public ScriptRunner ScriptRunner { get; private set; }
         public Cursor Cursor { get; private set; }
+        public GuiSystem GuiSystem { get; private set; }
 
         public GamePadEx GamePad
         {
@@ -58,6 +60,7 @@ namespace Game2DFramework
 
             Keyboard = new KeyboardEx();
             Mouse = new MouseEx();
+            GuiSystem = new GuiSystem(this);
             DepthRenderer = new DepthRenderer();
             ScriptRunner = new ScriptRunner(this);
             Cursor =  new Cursor(this);
