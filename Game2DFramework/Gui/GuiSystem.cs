@@ -25,7 +25,8 @@ namespace Game2DFramework.Gui
             _itemDescriptors = new List<SkinItemDescriptor>
             {
                 new FrameSkinItemDescriptor(),
-                new TextBlockSkinItemDescriptor()
+                new TextBlockSkinItemDescriptor(),
+                new ButtonSkinItemDescriptor(),
             };
         }
 

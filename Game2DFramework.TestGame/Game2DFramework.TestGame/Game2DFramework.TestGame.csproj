@@ -107,8 +107,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GuiTestState.cs" />
+    <Compile Include="GridTest.cs" />
+    <Compile Include="StackPanelWithFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartState.cs" />
     <Compile Include="TestGame.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +123,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="GuiSkin\SampleFrame.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GuiSkin\StartStateLayout.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -13,5 +13,8 @@
       <Image Source="icon" />
       <TextBlock Text="Third Entry" Margin="5" />
     </StackPanel>
+    <Button Margin="10">
+      <TextBlock Text="Click Me!" Margin="5" />
+    </Button>
   </StackPanel>
 </Frame>

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework.Gui
 {
-    public class Frame : GuiElement
+    public class Frame : ContentControl
     {
         private SpriteFont _headerFont;
         private NinePatchSprite _contentBorder;
@@ -25,8 +25,6 @@ namespace Game2DFramework.Gui
             {
                 Title = element.GetAttribute("Title");
             }
-
-            if (element.HasChildNodes) SetContent(CreateFromXmlType(guiSystem, (XmlElement)element.FirstChild));
         }
 
         public Frame(GuiSystem guiSystem)
@@ -43,15 +41,9 @@ namespace Game2DFramework.Gui
             _headerBorder = new NinePatchSprite(itemDescriptor.SkinTexture, itemDescriptor.SourceRectangle, itemDescriptor.FrameBorder);
         }
 
-        public void SetContent(GuiElement guiElement)
-        {
-            if (Children.Count == 1) Children.Clear();
-            Children.Add(guiElement);
-        }
-
         public override Rectangle GetMinSize()
         {
-            if (Children.Count == 0)
+            if (Child == null)
             {
                 if(string.IsNullOrEmpty(Title)) return _contentBorder.MinSize;
 
@@ -62,9 +54,9 @@ namespace Game2DFramework.Gui
                 return size;
             }
 
-            var childMinSize = Children[0].GetMinSize();
+            var childMinSize = Child.GetMinSize();
 
-            var minSize = new Rectangle(0, 0, childMinSize.Width + _headerBorder.MinSize.Width, _contentBorder.MinSize.Height);
+            var minSize = new Rectangle(0, 0, childMinSize.Width + _headerBorder.MinSize.Width, childMinSize.Height + _contentBorder.MinSize.Height);
             if (!string.IsNullOrEmpty(Title))
             {
                 var headerSize = GetHeaderSize();
@@ -102,14 +94,14 @@ namespace Game2DFramework.Gui
                 _contentBorder.SetBounds(bounds);
             }
 
-            if (Children.Count == 1)
+            if (Child != null)
             {
                 var rectangle = target;
                 rectangle.X += _contentBorder.FixedBorder.Top;
                 rectangle.Y += string.IsNullOrEmpty(Title) ? _contentBorder.FixedBorder.Left: headerSize.Height;
                 rectangle.Width -= _contentBorder.FixedBorder.Vertical;
                 rectangle.Height -= string.IsNullOrEmpty(Title) ? _contentBorder.FixedBorder.Vertical : _contentBorder.FixedBorder.Top + headerSize.Height;
-                Children[0].Arrange(rectangle);
+                Child.Arrange(rectangle);
             }
         }
 
@@ -122,16 +114,7 @@ namespace Game2DFramework.Gui
                 Game.SpriteBatch.DrawString(_headerFont, Title, new Vector2(_headerBorder.Bounds.X + _headerBorder.FixedBorder.Left, _headerBorder.Bounds.Y + _headerBorder.FixedBorder.Top), Color.White);
             }
 
-            if (Children.Count == 1)
-            {
-                var child = Children[0];
-                child.Draw();
-            }
-        }
-
-        public override void Update(float elapsedTime)
-        {
-            if (Children.Count == 1) Children[0].Update(elapsedTime);
+            base.Draw();
         }
     }
 }

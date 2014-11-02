@@ -29,7 +29,7 @@ namespace Game2DFramework.Gui
 
             if(Texture != null)
             {
-                SourceRectangle = element.HasAttribute("SourceRectangle") ? element.GetAttribute("SourceRectangle").ParseRectangle() : Texture.Bounds;   
+                SourceRectangle = element.HasAttribute("NormalRectangle") ? element.GetAttribute("NormalRectangle").ParseRectangle() : Texture.Bounds;   
             }
         }
 

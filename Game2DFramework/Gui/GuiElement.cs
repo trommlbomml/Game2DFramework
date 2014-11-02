@@ -18,7 +18,7 @@ namespace Game2DFramework.Gui
                 case "StackPanel": return new StackPanel(guiSystem, element);
                 case "Image": return new Image(guiSystem, element);
                 case "Grid": return new Grid(guiSystem, element);
-                //case "Button": return new Button(game, element);
+                case "Button": return new Button(guiSystem, element);
             }
 
             throw new ArgumentException("Invalid Element Type", "element");

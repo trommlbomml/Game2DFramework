@@ -25,7 +25,7 @@ namespace Game2DFramework.Gui
             Bottom = bottom;
         }
 
-        public Thickness(int vertical, int horizontal)
+        public Thickness(int horizontal, int vertical)
         {
             Left = horizontal;
             Right = horizontal;

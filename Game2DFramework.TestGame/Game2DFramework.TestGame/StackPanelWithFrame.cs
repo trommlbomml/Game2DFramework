@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game2DFramework.Gui;
+﻿using Game2DFramework.Gui;
 using Game2DFramework.States;
 using Microsoft.Xna.Framework;
 
 namespace Game2DFramework.TestGame
 {
-    class GuiTestState : InitializableState
+    class StackPanelWithFrame : InitializableState
     {
         private Frame _frame;
 
@@ -18,8 +15,7 @@ namespace Game2DFramework.TestGame
 
         protected override void OnInitialize(object enterInformation)
         {
-            //_frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin/SampleFrame.xml");
-            _frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin/GridFrame.xml");
+            _frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin/SampleFrame.xml");
         }
 
         public override void OnLeave()

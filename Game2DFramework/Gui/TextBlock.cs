@@ -42,9 +42,7 @@ namespace Game2DFramework.Gui
             if (string.IsNullOrEmpty(Text)) return ApplyMargin(new Rectangle());
 
             var size = Font.MeasureString(Text);
-            var sizeWithoutMargin = new Rectangle(0, 0, (int)Math.Round(size.X) + Margin.Horizontal, (int)Math.Round(size.Y) + Margin.Vertical);
-
-            return ApplyMargin(sizeWithoutMargin);
+            return ApplyMargin(new Rectangle(0, 0, (int)Math.Round(size.X), (int)Math.Round(size.Y)));
         }
 
         public override void Arrange(Rectangle target)

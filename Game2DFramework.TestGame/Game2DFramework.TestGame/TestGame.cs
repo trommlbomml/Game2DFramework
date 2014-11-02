@@ -26,8 +26,10 @@ namespace Game2DFramework.TestGame
 
         protected override Type RegisterStates()
         {
-            RegisterState(new GuiTestState());
-            return typeof(GuiTestState);
+            RegisterState(new StartState());
+            RegisterState(new StackPanelWithFrame());
+            RegisterState(new GridTest());
+            return typeof(StartState);
         }
 
         protected override void LoadContent()
@@ -43,6 +45,8 @@ namespace Game2DFramework.TestGame
             };
 
             GuiSystem.SetSkin(parameters);
+
+            IsMouseVisible = true;
         }
     }
 }

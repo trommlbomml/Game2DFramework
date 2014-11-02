@@ -25,6 +25,11 @@ namespace Game2DFramework.Input
             Y = _currentMouseState.Y;
         }
 
+        public bool IsLeftButtonClicked()
+        {
+            return _currentMouseState.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed;
+        }
+
         public bool IsLeftButtonDown()
         {
             return _currentMouseState.LeftButton == ButtonState.Pressed;
