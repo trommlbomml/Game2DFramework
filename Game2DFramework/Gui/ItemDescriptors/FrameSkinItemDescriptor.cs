@@ -19,7 +19,7 @@ namespace Game2DFramework.Gui.ItemDescriptors
             FrameBorder = Thickness.Parse(element.GetAttribute("Border"));
             SourceRectangle = new Rectangle(int.Parse(element.GetAttribute("Left")), 
                                             int.Parse(element.GetAttribute("Top")), 
-                                            int.Parse(element.GetAttribute("Size")), 
+                                            int.Parse(element.GetAttribute("Width")), 
                                             int.Parse(element.GetAttribute("Height")));
         }
 

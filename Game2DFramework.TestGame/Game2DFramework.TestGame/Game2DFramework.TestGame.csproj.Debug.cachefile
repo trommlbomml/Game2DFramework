@@ -1,6 +1,8 @@
 Content\border.xnb
+Content\icon.xnb
+Content\smilie.xnb
 Content\BigFont.xnb
 Content\NormalFont.xnb
-Content\icon.xnb
+GuiSkin\GridFrame.xml
 GuiSkin\GuiSkin.xml
 GuiSkin\SampleFrame.xml

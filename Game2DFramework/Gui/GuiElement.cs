@@ -17,6 +17,7 @@ namespace Game2DFramework.Gui
                 case "TextBlock": return new TextBlock(guiSystem, element);
                 case "StackPanel": return new StackPanel(guiSystem, element);
                 case "Image": return new Image(guiSystem, element);
+                case "Grid": return new Grid(guiSystem, element);
                 //case "Button": return new Button(game, element);
             }
 

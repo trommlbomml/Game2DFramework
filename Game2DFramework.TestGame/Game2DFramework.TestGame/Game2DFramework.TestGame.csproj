@@ -114,6 +114,9 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="GuiSkin\GridFrame.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="GuiSkin\GuiSkin.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

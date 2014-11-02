@@ -94,6 +94,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="Gui\Frame.cs" />
     <Compile Include="Gui\Grid.cs" />
+    <Compile Include="Gui\GridItemDefinition.cs" />
     <Compile Include="Gui\Image.cs" />
     <Compile Include="Gui\ItemDescriptors\FrameSkinItemDescriptor.cs" />
     <Compile Include="Gui\GuiElement.cs" />
