@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,21 +16,8 @@ namespace Game2DFramework.Gui.ItemDescriptors
         public void Deserialize(XmlElement element)
         {
             ButtonBorder = Thickness.Parse(element.GetAttribute("Border"));
-
-            var normalElement = (XmlElement)element.SelectSingleNode("NormalRectangle");
-            var hoverElement = (XmlElement)element.SelectSingleNode("HoverRectangle");
-
-// ReSharper disable PossibleNullReferenceException
-            NormalRectangle = new Rectangle(int.Parse(normalElement.GetAttribute("Left")),
-                                            int.Parse(normalElement.GetAttribute("Top")),
-                                            int.Parse(normalElement.GetAttribute("Width")),
-                                            int.Parse(normalElement.GetAttribute("Height")));
-
-            HoverRectangle = new Rectangle(int.Parse(hoverElement.GetAttribute("Left")),
-                                            int.Parse(hoverElement.GetAttribute("Top")),
-                                            int.Parse(hoverElement.GetAttribute("Width")),
-                                            int.Parse(hoverElement.GetAttribute("Height")));
-// ReSharper restore PossibleNullReferenceException
+            NormalRectangle = element.GetAttribute("NormalRectangle").ParseRectangle();
+            HoverRectangle = element.GetAttribute("HoverRectangle").ParseRectangle();
         }
 
         public Thickness ButtonBorder { get; set; }

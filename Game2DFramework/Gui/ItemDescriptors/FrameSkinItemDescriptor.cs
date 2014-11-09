@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,10 +18,7 @@ namespace Game2DFramework.Gui.ItemDescriptors
         public void Deserialize(XmlElement element)
         {
             FrameBorder = Thickness.Parse(element.GetAttribute("Border"));
-            SourceRectangle = new Rectangle(int.Parse(element.GetAttribute("Left")), 
-                                            int.Parse(element.GetAttribute("Top")), 
-                                            int.Parse(element.GetAttribute("Width")), 
-                                            int.Parse(element.GetAttribute("Height")));
+            SourceRectangle = element.GetAttribute("NormalRectangle").ParseRectangle();
         }
 
         public Thickness FrameBorder { get; set; }

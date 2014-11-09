@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackPanel Orientation="Vertical">
+  <Button Margin="4" Id="StackPanelWithFrameButton">
+    <TextBlock Text="Stackpanel with Frame" Margin="10,2" />
+  </Button>
+  <Button Margin="4" Id="GridTestButton">
+    <TextBlock Text="GUI Grid" Margin="10,2" />
+  </Button>
+</StackPanel>

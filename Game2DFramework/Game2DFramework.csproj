@@ -43,14 +43,9 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>False</Private>
+    <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\MonoGame.Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <Private>False</Private>
@@ -103,8 +98,10 @@
     <Compile Include="Gui\GuiElement.cs" />
     <Compile Include="Gui\GuiSystem.cs" />
     <Compile Include="Gui\ItemDescriptors\TextBlockSkinItemDescriptor.cs" />
+    <Compile Include="Gui\ItemDescriptors\TextBoxSkinItemDescriptor.cs" />
     <Compile Include="Gui\StackPanel.cs" />
     <Compile Include="Gui\TextBlock.cs" />
+    <Compile Include="Gui\TextBox.cs" />
     <Compile Include="Gui\Thickness.cs" />
     <Compile Include="Gui\SkinItemDescriptor.cs" />
     <Compile Include="Input\GamePadEx.cs" />

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<GuiSkin>
-  <Frame Left="0" Top="0" Width="32" Height="32" Border="12" />
-  <Button Border="12">
-    <NormalRectangle Left="32" Top="0" Width="32" Height="32" />
-    <HoverRectangle Left="64" Top="0" Width="32" Height="32" />
-  </Button>
-</GuiSkin>
