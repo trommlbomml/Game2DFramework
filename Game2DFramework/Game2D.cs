@@ -56,14 +56,8 @@ namespace Game2DFramework
 
         private int GetScreenSizeComponent(int defaultSize, string propertyName, int fallbackValue)
         {
-            var size = defaultSize;
-            int configuredSize;
-            if (TryGetPropertyInt(propertyName, out configuredSize))
-            {
-                size = configuredSize;
-            }
+            var size = GetPropertyIntOrDefault(propertyName, defaultSize);
             if (size == 0) size = fallbackValue;
-
             return size;
         }
         
@@ -120,6 +114,23 @@ namespace Game2DFramework
         public bool TryGetPropertyInt(string name, out int value)
         {
             return TryGetProperty(name, int.Parse, out value);
+        }
+
+        public string GetPropertyStringOrDefault(string name, string defaultValue = "")
+        {
+            return GetPropertyValueOrDefault(name, s => s, defaultValue);
+        }
+
+        public int GetPropertyIntOrDefault(string name, int defaultValue = 0)
+        {
+            return GetPropertyValueOrDefault(name, int.Parse, defaultValue);
+        }
+
+        public TPropertyType GetPropertyValueOrDefault<TPropertyType>(string name, Func<string, TPropertyType> converter,
+            TPropertyType defaultValue = default(TPropertyType))
+        {
+            TPropertyType value;
+            return TryGetProperty(name, converter, out value) ? value : defaultValue;
         }
 
         public bool TryGetProperty<TPropertyType>(string name, Func<string, TPropertyType> converter, out TPropertyType value)
