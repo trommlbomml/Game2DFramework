@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Xml;
 using Game2DFramework.Cameras;
 using Game2DFramework.Drawing;
@@ -95,7 +95,7 @@ namespace Game2DFramework
             _registeredGlobals = new Dictionary<string, GameObject>();
         }
 
-        public void SetProperty(string name, string value)
+        private GameProperty GetOrCreateProperty(string name)
         {
             GameProperty property;
             if (!_properties.TryGetValue(name, out property))
@@ -103,7 +103,22 @@ namespace Game2DFramework
                 property = new GameProperty(name);
                 _properties.Add(property.Name, property);
             }
-            property.Value = value;
+            return property;
+        }
+
+        public void SetProperty(string name, string value)
+        {
+            GetOrCreateProperty(name).Value = value;
+        }
+
+        public void SetProperty(string name, int value)
+        {
+            GetOrCreateProperty(name).Value = value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public void SetProperty(string name, bool value)
+        {
+            GetOrCreateProperty(name).Value = value.ToString(CultureInfo.InvariantCulture);
         }
 
         public bool TryGetPropertyString(string name, out string value)
@@ -124,6 +139,11 @@ namespace Game2DFramework
         public int GetPropertyIntOrDefault(string name, int defaultValue = 0)
         {
             return GetPropertyValueOrDefault(name, int.Parse, defaultValue);
+        }
+
+        public bool GetPropertyBoolOrDefault(string name, bool defaultValue = false)
+        {
+            return GetPropertyValueOrDefault(name, bool.Parse, defaultValue);
         }
 
         public TPropertyType GetPropertyValueOrDefault<TPropertyType>(string name, Func<string, TPropertyType> converter,
@@ -165,7 +185,9 @@ namespace Game2DFramework
 
             foreach (var gameProperty in _properties.Values)
             {
+// ReSharper disable PossibleNullReferenceException
                 var element = (XmlElement)document.DocumentElement.AppendChild(document.CreateElement("Property"));
+// ReSharper restore PossibleNullReferenceException
                 element.SetAttribute("Name", gameProperty.Name);
                 element.SetAttribute("Value", gameProperty.Value);
             }
