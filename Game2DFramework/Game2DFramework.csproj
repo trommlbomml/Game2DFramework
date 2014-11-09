@@ -87,6 +87,7 @@
     <Compile Include="Extensions\Vector2Extension.cs" />
     <Compile Include="Game2D.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameProperty.cs" />
     <Compile Include="Gui\Button.cs" />
     <Compile Include="Gui\ContentControl.cs" />
     <Compile Include="Gui\Frame.cs" />

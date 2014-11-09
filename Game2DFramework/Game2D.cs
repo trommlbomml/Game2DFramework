@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
 using Game2DFramework.Cameras;
 using Game2DFramework.Drawing;
 using Game2DFramework.Gui;
@@ -16,6 +19,10 @@ namespace Game2DFramework
 
     public abstract class Game2D : Game
     {
+        private const string DefaultConfigFileName = "game.config.xml";
+
+        private readonly string _configFileName;
+        private readonly Dictionary<string, GameProperty> _properties = new Dictionary<string, GameProperty>();
         private StateManager _stateManager;
         private readonly ClearOptions _clearOptions;
         private GamePadEx _gamePad;
@@ -45,14 +52,33 @@ namespace Game2DFramework
             private set { _gamePad = value; }
         }
 
-        public event GlobalObjectChangedEventHandler GlobalObjectChanged; 
-        
-        protected Game2D(int screenWidth, int screenHeight, bool fullscreen, bool useGamePad = false, DepthFormat depthFormat = DepthFormat.None)
+        public event GlobalObjectChangedEventHandler GlobalObjectChanged;
+
+        private int GetScreenSizeComponent(int defaultSize, string propertyName, int fallbackValue)
         {
+            var size = defaultSize;
+            int configuredSize;
+            if (TryGetPropertyInt(propertyName, out configuredSize))
+            {
+                size = configuredSize;
+            }
+            if (size == 0) size = fallbackValue;
+
+            return size;
+        }
+        
+        protected Game2D(int defaultScreenWidth = 800, int defaultScreenHeight = 600, bool fullscreen = false, bool useGamePad = false, DepthFormat depthFormat = DepthFormat.None, string configFileName = null)
+        {
+            _configFileName = string.IsNullOrEmpty(configFileName) ? DefaultConfigFileName : configFileName;
+            LoadGameProperties();
+
+            var width = GetScreenSizeComponent(defaultScreenWidth, GameProperty.GameResolutionXProperty, 800);
+            var height = GetScreenSizeComponent(defaultScreenHeight, GameProperty.GameResolutionXProperty, 600);
+
             GraphicsDeviceManager = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = screenWidth,
-                PreferredBackBufferHeight = screenHeight,
+                PreferredBackBufferWidth = width,
+                PreferredBackBufferHeight = height,
                 PreferredDepthStencilFormat = depthFormat,
                 IsFullScreen = fullscreen
             };
@@ -73,6 +99,67 @@ namespace Game2DFramework
             }
 
             _registeredGlobals = new Dictionary<string, GameObject>();
+        }
+
+        public void SetProperty(string name, string value)
+        {
+            GameProperty property;
+            if (!_properties.TryGetValue(name, out property))
+            {
+                property = new GameProperty(name);
+                _properties.Add(property.Name, property);
+            }
+            property.Value = value;
+        }
+
+        public bool TryGetPropertyString(string name, out string value)
+        {
+            return TryGetProperty(name, s => s, out value);
+        }
+
+        public bool TryGetPropertyInt(string name, out int value)
+        {
+            return TryGetProperty(name, int.Parse, out value);
+        }
+
+        public bool TryGetProperty<TPropertyType>(string name, Func<string, TPropertyType> converter, out TPropertyType value)
+        {
+            GameProperty property;
+            value = _properties.TryGetValue(name, out property) ? converter(property.Value) : default(TPropertyType);
+            return property != null;
+        }
+
+        public void LoadGameProperties()
+        {
+            if (!File.Exists(_configFileName)) return;
+
+            var document = new XmlDocument();
+            document.Load(_configFileName);
+
+            if (document.DocumentElement != null)
+            {
+                foreach (XmlElement element in document.DocumentElement.ChildNodes)
+                {
+                    var name = element.GetAttribute("Name");
+                    var value = element.GetAttribute("Value");
+                    _properties.Add(name, new GameProperty(name) {Value = value});
+                }   
+            }
+        }
+
+        public void SavePropertyChanges()
+        {
+            var document = new XmlDocument();
+            document.AppendChild(document.CreateElement("GameConfiguration"));
+
+            foreach (var gameProperty in _properties.Values)
+            {
+                var element = (XmlElement)document.DocumentElement.AppendChild(document.CreateElement("Property"));
+                element.SetAttribute("Name", gameProperty.Name);
+                element.SetAttribute("Value", gameProperty.Value);
+            }
+
+            document.Save(_configFileName);
         }
 
         private void InvokeGlobalObjectChanged(string name, GameObject oldValue, GameObject newValue)

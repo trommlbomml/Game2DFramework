@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game2DFramework.Gui;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework.TestGame
@@ -22,7 +23,7 @@ namespace Game2DFramework.TestGame
 #endif
 
         public TestGame()
-            : base(1024, 768, false)
+            : base(1024, 768)
         {
         }
 
