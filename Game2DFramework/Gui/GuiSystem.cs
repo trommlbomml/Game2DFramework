@@ -27,6 +27,7 @@ namespace Game2DFramework.Gui
                 new FrameSkinItemDescriptor(),
                 new TextBlockSkinItemDescriptor(),
                 new ButtonSkinItemDescriptor(),
+                new TextBoxSkinItemDescriptor(),
             };
         }
 

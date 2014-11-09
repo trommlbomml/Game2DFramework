@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Game2DFramework.Gui;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Game2DFramework.TestGame
+namespace Game2DFramework.MonoGame
 {
     /// <summary>
     /// This is the main type for your game
@@ -32,6 +29,7 @@ namespace Game2DFramework.TestGame
             RegisterState(new StartState());
             RegisterState(new StackPanelWithFrame());
             RegisterState(new GridTest());
+            RegisterState(new InputGuiTestState());
             return typeof(StartState);
         }
 

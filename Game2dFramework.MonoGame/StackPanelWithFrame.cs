@@ -2,7 +2,7 @@
 using Game2DFramework.States;
 using Microsoft.Xna.Framework;
 
-namespace Game2DFramework.TestGame
+namespace Game2DFramework.MonoGame
 {
     class StackPanelWithFrame : InitializableState
     {

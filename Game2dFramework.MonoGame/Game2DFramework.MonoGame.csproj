@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GridTest.cs" />
+    <Compile Include="InputGuiTestState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StackPanelWithFrame.cs" />
     <Compile Include="StartState.cs" />
@@ -57,6 +58,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="GuiSkin\GuiSkin.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GuiSkin\InputBoxes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="GuiSkin\SampleFrame.xml">

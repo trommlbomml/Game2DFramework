@@ -10,7 +10,7 @@ namespace Game2DFramework.Gui
     {
         private readonly List<GridItemDefinition> _rowDefinitions = new List<GridItemDefinition>();
         private readonly List<GridItemDefinition> _columnDefinitions = new List<GridItemDefinition>();
-        private readonly Dictionary<int, GuiElement> _childElementsByLinearTableIndex = new Dictionary<int, GuiElement>();
+        private readonly Dictionary<Tuple<int, int>, GuiElement> _childElementsByLinearTableIndex = new Dictionary<Tuple<int, int>, GuiElement>();
 
         public Grid(GuiSystem guiSystem)
             : base(guiSystem)
@@ -64,9 +64,9 @@ namespace Game2DFramework.Gui
 
         private void AddChild(int column, int row, GuiElement element)
         {
-            var linearIndex = row*_columnDefinitions.Count + column;
+            //var linearIndex = row*_columnDefinitions.Count + column;
 
-            _childElementsByLinearTableIndex.Add(linearIndex, element);
+            _childElementsByLinearTableIndex.Add(new Tuple<int, int>(column, row), element);
             Children.Add(element);
         }
 
@@ -77,8 +77,11 @@ namespace Game2DFramework.Gui
 
             foreach (var elementByIndex in _childElementsByLinearTableIndex)
             {
-                var row = elementByIndex.Key /_rowDefinitions.Count;
-                var column = elementByIndex.Key % _rowDefinitions.Count;
+                //var row = elementByIndex.Key /_rowDefinitions.Count;
+                //var column = elementByIndex.Key % _rowDefinitions.Count;
+
+                var column = elementByIndex.Key.Item1;
+                var row = elementByIndex.Key.Item2;
                 var minSizeOfElement = elementByIndex.Value.GetMinSize();
 
                 if (rowHeights.ContainsKey(row))
@@ -158,29 +161,28 @@ namespace Game2DFramework.Gui
 
                 for (var x = 0; x < _columnDefinitions.Count; x++)
                 {
-                    GuiElement element;
-                    if (_childElementsByLinearTableIndex.TryGetValue(y*_columnDefinitions.Count + x, out element))
+                    var element = _childElementsByLinearTableIndex.FirstOrDefault(c => c.Key.Item1 == x && c.Key.Item2 == y).Value;
+                    if (element != null)
                     {
-                        var currentRectangle = new Rectangle(startX, startY, columnWidths[x], rowHeights[y]);
-                        element.Arrange(currentRectangle);
+                        element.Arrange(new Rectangle(startX, startY, columnWidths[x], rowHeights[y]));
                     }
 
                     startX += columnWidths[x];
                 }
 
-                startY += columnWidths[y];
+                startY += rowHeights[y];
             }
         }
 
         private int GetMaxWidthInColumn(int column)
         {
-            return _childElementsByLinearTableIndex.Where(kvp => kvp.Key % _rowDefinitions.Count == column)
+            return _childElementsByLinearTableIndex.Where(kvp => kvp.Key.Item1 == column)
                                                    .Max(kvp => kvp.Value.GetMinSize().Width);
         }
 
         private int GetMaxHeightInRow(int row)
         {
-            return _childElementsByLinearTableIndex.Where(kvp => kvp.Key / _rowDefinitions.Count == row)
+            return _childElementsByLinearTableIndex.Where(kvp => kvp.Key.Item2 == row)
                                                    .Max(kvp => kvp.Value.GetMinSize().Height);
         }
 

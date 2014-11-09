@@ -4,7 +4,7 @@ using Game2DFramework.States;
 using Game2DFramework.States.Transitions;
 using Microsoft.Xna.Framework;
 
-namespace Game2DFramework.TestGame
+namespace Game2DFramework.MonoGame
 {
     class StartState : InitializableState
     {
@@ -22,6 +22,7 @@ namespace Game2DFramework.TestGame
 
             SetButtonTransitionTo("StackPanelWithFrameButton", typeof(StackPanelWithFrame));
             SetButtonTransitionTo("GridTestButton", typeof(GridTest));
+            SetButtonTransitionTo("TextBoxTestButton", typeof(InputGuiTestState));
         }
 
         private void SetButtonTransitionTo(string buttonId, Type targetState)
