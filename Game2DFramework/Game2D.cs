@@ -7,7 +7,6 @@ using Game2DFramework.Cameras;
 using Game2DFramework.Drawing;
 using Game2DFramework.Gui;
 using Game2DFramework.Input;
-using Game2DFramework.Scripting;
 using Game2DFramework.States;
 using Game2DFramework.States.Transitions;
 using Microsoft.Xna.Framework;
@@ -38,7 +37,6 @@ namespace Game2DFramework
         public SpriteBatch SpriteBatch { get; private set; }
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
         public Camera Camera { get; private set; }
-        public ScriptRunner ScriptRunner { get; private set; }
         public Cursor Cursor { get; private set; }
         public GuiSystem GuiSystem { get; private set; }
 
@@ -82,7 +80,6 @@ namespace Game2DFramework
             Mouse = new MouseEx();
             GuiSystem = new GuiSystem(this);
             DepthRenderer = new DepthRenderer();
-            ScriptRunner = new ScriptRunner(this);
             Cursor =  new Cursor(this);
             if (useGamePad) GamePad = new GamePadEx();
 
@@ -276,7 +273,6 @@ namespace Game2DFramework
 
             if (!_stateManager.TransitionInProgress)
             {
-                ScriptRunner.Update(elapsedTime);
                 Camera.Update(elapsedTime);
                 Keyboard.Update();
                 Mouse.Update(elapsedTime);

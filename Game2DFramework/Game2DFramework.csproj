@@ -101,10 +101,6 @@
     <Compile Include="Log.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripting\DialogStep.cs" />
-    <Compile Include="Scripting\ScriptedStep.cs" />
-    <Compile Include="Scripting\ScriptRunner.cs" />
-    <Compile Include="Scripting\ScriptRunnerParameters.cs" />
     <Compile Include="Sound\SoundService.cs" />
     <Compile Include="StateManager.cs" />
     <Compile Include="States\Event.cs" />
