@@ -56,17 +56,12 @@ namespace Game2DFramework.Gui
                 }
             }
 
-            size.X -= Margin.Left;
-            size.Y -= Margin.Top;
-            size.Height += Margin.Vertical;
-            size.Width += Margin.Horizontal;
-
-            return size;
+            return ApplyMarginAndHandleSize(size);
         }
 
         public override void Arrange(Rectangle target)
         {
-            Bounds = new Rectangle(target.X + Margin.Left, target.Y + Margin.Top, target.Width - Margin.Horizontal, target.Height - Margin.Vertical);
+            Bounds = RemoveMargin(target);
 
             var startX = Bounds.X;
             var startY = Bounds.Y;

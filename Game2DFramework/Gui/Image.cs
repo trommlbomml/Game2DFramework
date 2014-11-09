@@ -35,7 +35,7 @@ namespace Game2DFramework.Gui
 
         public override Rectangle GetMinSize()
         {
-            return ApplyMargin(SourceRectangle);
+            return ApplyMarginAndHandleSize(SourceRectangle);
         }
 
         public override void Arrange(Rectangle target)

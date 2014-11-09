@@ -39,10 +39,10 @@ namespace Game2DFramework.Gui
 
         public override Rectangle GetMinSize()
         {
-            if (string.IsNullOrEmpty(Text)) return ApplyMargin(new Rectangle());
+            if (string.IsNullOrEmpty(Text)) return ApplyMarginAndHandleSize(new Rectangle());
 
             var size = Font.MeasureString(Text);
-            return ApplyMargin(new Rectangle(0, 0, (int)Math.Round(size.X), (int)Math.Round(size.Y)));
+            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(size.X), (int)Math.Round(size.Y)));
         }
 
         public override void Arrange(Rectangle target)

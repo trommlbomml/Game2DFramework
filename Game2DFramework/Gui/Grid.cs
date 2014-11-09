@@ -100,11 +100,13 @@ namespace Game2DFramework.Gui
                 }
             }
 
-            return new Rectangle(0,0,columnWidths.Values.Max(), rowHeights.Values.Max());
+            return ApplyMarginAndHandleSize(new Rectangle(0, 0, columnWidths.Values.Max(), rowHeights.Values.Max()));
         }
 
         public override void Arrange(Rectangle target)
         {
+            target = RemoveMargin(target);
+
             var rowHeights = new Dictionary<int, int>();
             var columnWidths = new Dictionary<int, int>();
 

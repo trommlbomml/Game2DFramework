@@ -7,6 +7,8 @@ namespace Game2DFramework.Gui
 {
     public abstract class GuiElement : GameObject
     {
+        public const int SizeNotSet = int.MinValue;
+
         protected GuiSystem GuiSystem { get; private set; }
 
         public static GuiElement CreateFromXmlType(GuiSystem guiSystem, XmlElement element)
@@ -37,6 +39,8 @@ namespace Game2DFramework.Gui
             GuiSystem = guiSystem;
             Children = new List<GuiElement>();
 
+            if (element.HasAttribute("Width")) Width = int.Parse(element.GetAttribute("Width"));
+            if (element.HasAttribute("Height")) Width = int.Parse(element.GetAttribute("Height"));
             if (element.HasAttribute("Margin")) Margin = Thickness.Parse(element.GetAttribute("Margin"));
             if (element.HasAttribute("Id")) Id = element.GetAttribute("Id");
         }
@@ -53,12 +57,13 @@ namespace Game2DFramework.Gui
             return null;
         }
 
-        protected Rectangle ApplyMargin(Rectangle rectangle)
+        protected Rectangle ApplyMarginAndHandleSize(Rectangle rectangle)
         {
             rectangle.X -= Margin.Left;
             rectangle.Y -= Margin.Top;
-            rectangle.Width += Margin.Horizontal;
-            rectangle.Height += Margin.Vertical;
+            rectangle.Width = Math.Max(Width, rectangle.Width + Margin.Horizontal);
+            rectangle.Height = Math.Max(Height, rectangle.Height + Margin.Vertical);
+
             return rectangle;
         }
 
@@ -75,6 +80,9 @@ namespace Game2DFramework.Gui
         public List<GuiElement> Children { get; private set; }
         public Rectangle Bounds { get; protected set; }
         public Thickness Margin { get; set; }
+
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public abstract Rectangle GetMinSize();
 

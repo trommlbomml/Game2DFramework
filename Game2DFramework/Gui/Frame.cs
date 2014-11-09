@@ -68,7 +68,7 @@ namespace Game2DFramework.Gui
                 minSize.Height += _headerBorder.MinSize.Height;
             }
 
-            return minSize;
+            return ApplyMarginAndHandleSize(minSize);
         }
 
         private Rectangle GetHeaderSize()
@@ -81,6 +81,8 @@ namespace Game2DFramework.Gui
 
         public override void Arrange(Rectangle target)
         {
+            target = RemoveMargin(target);
+
             _contentBorder.SetBounds(target);
 
             var headerSize = GetHeaderSize();
