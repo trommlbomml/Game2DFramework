@@ -1,65 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <ProjectGuid>{3943E03F-8B56-41EB-87D0-F6C962C7D952}</ProjectGuid>
-    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E60F642F-66EA-43D4-8DE0-1FFEA3BA60BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Game2DFramework</RootNamespace>
     <AssemblyName>Game2DFramework</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
-    <XnaPlatform>Windows</XnaPlatform>
-    <XnaProfile>HiDef</XnaProfile>
-    <XnaCrossPlatformGroupID>462c8b2d-225f-4f66-99b0-3e056b0473b6</XnaCrossPlatformGroupID>
-    <XnaOutputType>Library</XnaOutputType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\x86\Debug</OutputPath>
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoStdLib>true</NoStdLib>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>x86</PlatformTarget>
-    <XnaCompressContent>false</XnaCompressContent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\x86\Release</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoStdLib>true</NoStdLib>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>x86</PlatformTarget>
-    <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\MonoGame.Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="mscorlib">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behavior.cs" />
+    <Compile Include="Behaviors\MoveDirectionalBehavior.cs" />
     <Compile Include="Cameras\Behaviors\FollowBoundaryCameraBehavior.cs" />
     <Compile Include="Cameras\Behaviors\StaticCameraBehavior.cs" />
     <Compile Include="Cameras\Camera.cs" />
@@ -72,6 +57,7 @@
     <Compile Include="Drawing\DepthRenderer.cs" />
     <Compile Include="Drawing\Dialog.cs" />
     <Compile Include="Drawing\IDepthSortable.cs" />
+    <Compile Include="Drawing\NinePatchSprite.cs" />
     <Compile Include="Drawing\Particles\DefaultEmitter.cs" />
     <Compile Include="Drawing\Particles\IParticleEmitter.cs" />
     <Compile Include="Drawing\Particles\IParticleRenderer.cs" />
@@ -81,30 +67,30 @@
     <Compile Include="Drawing\Particles\SpriteParticleSystem.cs" />
     <Compile Include="Drawing\ShapeRenderer.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
-    <Compile Include="Drawing\NinePatchSprite.cs" />
     <Compile Include="Extensions\StringParseExtension.cs" />
     <Compile Include="Extensions\TextureExtensions.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />
     <Compile Include="Game2D.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameObjectComponent.cs" />
     <Compile Include="GameProperty.cs" />
     <Compile Include="Gui\Button.cs" />
     <Compile Include="Gui\ContentControl.cs" />
     <Compile Include="Gui\Frame.cs" />
     <Compile Include="Gui\Grid.cs" />
     <Compile Include="Gui\GridItemDefinition.cs" />
+    <Compile Include="Gui\GuiElement.cs" />
+    <Compile Include="Gui\GuiSystem.cs" />
     <Compile Include="Gui\Image.cs" />
     <Compile Include="Gui\ItemDescriptors\ButtonSkinItemDescriptor.cs" />
     <Compile Include="Gui\ItemDescriptors\FrameSkinItemDescriptor.cs" />
-    <Compile Include="Gui\GuiElement.cs" />
-    <Compile Include="Gui\GuiSystem.cs" />
     <Compile Include="Gui\ItemDescriptors\TextBlockSkinItemDescriptor.cs" />
     <Compile Include="Gui\ItemDescriptors\TextBoxSkinItemDescriptor.cs" />
+    <Compile Include="Gui\SkinItemDescriptor.cs" />
     <Compile Include="Gui\StackPanel.cs" />
     <Compile Include="Gui\TextBlock.cs" />
     <Compile Include="Gui\TextBox.cs" />
     <Compile Include="Gui\Thickness.cs" />
-    <Compile Include="Gui\SkinItemDescriptor.cs" />
     <Compile Include="Input\GamePadEx.cs" />
     <Compile Include="Input\KeyboardEx.cs" />
     <Compile Include="Input\MouseEx.cs" />
@@ -135,14 +121,12 @@
     <Compile Include="States\Transitions\ThrowAwayTransition.cs" />
     <Compile Include="States\Transitions\ZappoutTransition.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
-  <!--
-      To modify your build process, add your task inside one of the targets below and uncomment it. 
-      Other similar extension points exist, see Microsoft.Common.targets.
-      <Target Name="BeforeBuild">
-      </Target>
-      <Target Name="AfterBuild">
-      </Target>
-    -->
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
