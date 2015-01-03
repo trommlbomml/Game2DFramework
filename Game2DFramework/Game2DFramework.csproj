@@ -43,14 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behavior.cs" />
-    <Compile Include="Behaviors\MoveDirectionalBehavior.cs" />
     <Compile Include="Cameras\Behaviors\FollowBoundaryCameraBehavior.cs" />
     <Compile Include="Cameras\Behaviors\StaticCameraBehavior.cs" />
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\ICameraBehavior.cs" />
     <Compile Include="Cameras\IFollowingTarget.cs" />
     <Compile Include="Collision\Circle.cs" />
+    <Compile Include="Components\GameObjectComponent.cs" />
     <Compile Include="Drawing\AnimatedSprite.cs" />
     <Compile Include="Drawing\Cursor.cs" />
     <Compile Include="Drawing\CursorType.cs" />
@@ -72,7 +71,6 @@
     <Compile Include="Extensions\Vector2Extension.cs" />
     <Compile Include="Game2D.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="GameObjectComponent.cs" />
     <Compile Include="GameProperty.cs" />
     <Compile Include="Gui\Button.cs" />
     <Compile Include="Gui\ContentControl.cs" />

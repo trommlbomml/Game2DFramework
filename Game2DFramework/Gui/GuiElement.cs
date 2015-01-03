@@ -90,7 +90,5 @@ namespace Game2DFramework.Gui
         public abstract void Arrange(Rectangle target);
 
         public abstract void Draw();
-
-        public abstract void Update(float elapsedTime);
     }
 }

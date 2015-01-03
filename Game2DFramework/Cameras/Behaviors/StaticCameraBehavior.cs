@@ -11,7 +11,7 @@ namespace Game2DFramework.Cameras.Behaviors
 
         public Vector2 Position { get { return new Vector2(Game.ScreenWidth, Game.ScreenHeight) * 0.5f; } }
 
-        public void Update(float elapsed)
+        public override void Update(float elapsed)
         {
         }
     }

@@ -15,7 +15,7 @@ namespace Game2DFramework.Cameras.Behaviors
 
         public Vector2 Position { get; private set; }
 
-        public void Update(float elapsed)
+        public override void Update(float elapsed)
         {
             var newPosition = new Vector2(Boundary.Left + Boundary.Width/2, Boundary.Top + Boundary.Height/2);
 

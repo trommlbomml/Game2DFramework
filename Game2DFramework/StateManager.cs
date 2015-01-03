@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework
 {
-    internal class StateManager : GameObject
+    internal class StateManager
     {
         private readonly Dictionary<Type, IState> _availableStates;
         private readonly Dictionary<Type, ITransition> _availableTransitions;
@@ -22,8 +22,9 @@ namespace Game2DFramework
 
         public bool TransitionInProgress { get; private set; }
 
-        public StateManager(Game2D game, ClearOptions clearOptions) : base(game)
+        public StateManager(Game2D game, ClearOptions clearOptions)
         {
+            Game = game;
             _clearOptions = clearOptions;
             _availableStates = new Dictionary<Type, IState>();
             _availableTransitions = new Dictionary<Type, ITransition>();
@@ -32,6 +33,8 @@ namespace Game2DFramework
             _targetRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.GraphicsDevice.Viewport.Width,
                                                      Game.GraphicsDevice.Viewport.Height);
         }
+
+        public Game2D Game { get; private set; }
 
         public void RegisterTransition(ITransition transition)
         {

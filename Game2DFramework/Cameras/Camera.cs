@@ -24,7 +24,7 @@ namespace Game2DFramework.Cameras
             _cameraBehavior = new FollowBoundaryCameraBehavior(Game, boundary, target);
         }
 
-        public virtual void Update(float elapsed)
+        public override void Update(float elapsed)
         {
             _cameraBehavior.Update(elapsed);
         }

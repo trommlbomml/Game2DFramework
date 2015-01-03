@@ -51,7 +51,7 @@ namespace Game2DFramework.Drawing
             State = DialogState.TransitToHide;
         }
 
-        public void Update(float elapsedTime)
+        public override void Update(float elapsedTime)
         {
             switch (State)
             {
