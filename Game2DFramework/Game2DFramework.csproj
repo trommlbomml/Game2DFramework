@@ -93,6 +93,8 @@
     <Compile Include="Input\KeyboardEx.cs" />
     <Compile Include="Input\MouseEx.cs" />
     <Compile Include="Interaction\ActionTimer.cs" />
+    <Compile Include="Interaction\Animation.cs" />
+    <Compile Include="Interaction\Animator.cs" />
     <Compile Include="Interaction\InputType.cs" />
     <Compile Include="Interaction\Storyboard.cs" />
     <Compile Include="Interaction\StringInputController.cs" />

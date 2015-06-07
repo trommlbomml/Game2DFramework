@@ -30,6 +30,7 @@ namespace Game2DFramework.MonoGame
             RegisterState(new StackPanelWithFrame());
             RegisterState(new GridTest());
             RegisterState(new InputGuiTestState());
+            RegisterState(new AnimationTest());
             return typeof(StartState);
         }
 
