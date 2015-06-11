@@ -101,6 +101,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Game2DFramework.MonoGame.Content\bin\MonoGameLogo.xnb">
+      <Link>Content\MonoGameLogo.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
