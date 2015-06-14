@@ -4,55 +4,50 @@ namespace Game2DFramework.Interaction
 {
     public class ActionTimer
     {
-        private Action<double> _action;
+        private readonly Action _action;
         private readonly float _triggerTime;
-        private readonly bool _triggerOnce;
+        private readonly bool _loop;
         private float _elapsedTime;
 
-        public ActionTimer(Action<double> action, float triggerTime, bool triggerOnce)
+        public ActionTimer(Action action, float triggerTime, bool loop = false)
         {
             _action = action;
             _triggerTime = triggerTime;
-            _triggerOnce = triggerOnce;
+            _loop = loop;
         }
 
-        public ActionTimer(float triggerTime, bool triggerOnce) : this(null, triggerTime, triggerOnce)
-        {
-        }
-
-        public bool Running { get; private set; }
+        public bool IsRunning { get; private set; }
         public float TotalElapsedTime { get; private set; }
 
-        public void Start(Action<double> action)
+        public void Start()
         {
-            _action = action;
-            Running = true;
+            IsRunning = true;
             _elapsedTime = 0;
             TotalElapsedTime = 0;
         }
 
-        public void Start()
-        {
-            Start(_action);
-        }
-
         public void Stop()
         {
-            Running = false;
+            IsRunning = false;
         }
 
-        public void Update(double timeStamp, float elapsed)
+        public void Update(float elapsed)
         {
-            if (!Running) return;
+            if (!IsRunning) return;
             _elapsedTime += elapsed;
             TotalElapsedTime += elapsed;
             if (_elapsedTime >= _triggerTime)
             {
-                _action(timeStamp);
-                if (_triggerOnce)
-                    Stop();
-                else
+                _action();
+                if (_loop)
+                {
                     _elapsedTime -= _triggerTime;
+                }
+                else
+                {
+                    Stop();
+                }
+                    
             }
         }
     }

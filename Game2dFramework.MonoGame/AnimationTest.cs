@@ -1,6 +1,7 @@
 ﻿using Game2DFramework.Drawing;
 using Game2DFramework.Interaction;
 using Game2DFramework.States;
+using Game2DFramework.States.Transitions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,21 +11,30 @@ namespace Game2DFramework.MonoGame
     {
         private Animator _iconAnimator;
         private Sprite _iconSprite;
+        private StateChangeInformation _stateChangeInformation;
+
+        protected override void OnInitialize(object enterInformation)
+        {
+            _iconSprite = new Sprite(Game.Content.Load<Texture2D>("Textures/MonoGameLogo"))
+            {
+                Position = new Vector2(Game.ScreenWidth * 0.5f, Game.ScreenHeight * 0.5f),
+                Alpha = 0.0f
+            };
+
+            _iconAnimator = new Animator();
+            _iconAnimator.AddAnimation("BlendIn", new Animation(1.0f, AnimateBlendIn));
+            _iconAnimator.AnimationFinished += () => Game.AddDelayedAction(OnStartTransition, 1.0f);
+        }
 
         protected override void OnEntered(object enterInformation)
         {
             _iconAnimator.PlayAnimation("BlendIn");
+            _stateChangeInformation = StateChangeInformation.Empty;
         }
 
-        protected override void OnInitialize(object enterInformation)
+        private void OnStartTransition()
         {
-            _iconAnimator = new Animator();
-            _iconAnimator.AddAnimation("BlendIn", new Animation(1.0f, AnimateBlendIn));
-            _iconSprite = new Sprite(Game.Content.Load<Texture2D>("Textures/MonoGameLogo"))
-            {
-                Position = new Vector2(Game.ScreenWidth*0.5f, Game.ScreenHeight*0.5f),
-                Alpha = 0.0f
-            };
+            _stateChangeInformation = StateChangeInformation.StateChange(typeof (StartState), typeof (BlendTransition));
         }
 
         private void AnimateBlendIn(float delta)
@@ -42,7 +52,7 @@ namespace Game2DFramework.MonoGame
         {
             _iconAnimator.Update(elapsedTime);
 
-            return StateChangeInformation.Empty;
+            return _stateChangeInformation;
         }
 
         public override void OnDraw(float elapsedTime)

@@ -7,6 +7,7 @@ using Game2DFramework.Cameras;
 using Game2DFramework.Drawing;
 using Game2DFramework.Gui;
 using Game2DFramework.Input;
+using Game2DFramework.Interaction;
 using Game2DFramework.States;
 using Game2DFramework.States.Transitions;
 using Microsoft.Xna.Framework;
@@ -27,6 +28,7 @@ namespace Game2DFramework
         private GamePadEx _gamePad;
         private Type _startupState;
         private readonly Dictionary<string, GameObject> _registeredGlobals;
+        private readonly List<ActionTimer> _activeTimers = new List<ActionTimer>();
 
         public int ScreenWidth { get { return GraphicsDevice.Viewport.Width; } }
         public int ScreenHeight { get { return GraphicsDevice.Viewport.Height; } }
@@ -276,6 +278,8 @@ namespace Game2DFramework
                 Camera.Update(elapsedTime);
                 Keyboard.Update();
                 Mouse.Update(elapsedTime);
+                _activeTimers.ForEach(a => a.Update(elapsedTime));
+                _activeTimers.RemoveAll(t => !t.IsRunning);
                 if (_gamePad != null) GamePad.Update();   
             }
 
@@ -295,6 +299,13 @@ namespace Game2DFramework
         {
             SpriteBatch.End();
             SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.Identity);
+        }
+
+        public void AddDelayedAction(Action action, float deltaTimeSeconds)
+        {
+            var actionTimer = new ActionTimer(action, deltaTimeSeconds);
+            actionTimer.Start();
+            _activeTimers.Add(actionTimer);
         }
     }
 }

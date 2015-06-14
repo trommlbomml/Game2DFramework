@@ -12,6 +12,8 @@ namespace Game2DFramework.Interaction
         public Animation CurrentAnimation { get; private set; }
 
         public event Action AnimationFinished;
+        public event Action<string> AnimationClipStarted;
+        public event Action<string> AnimationClipFinished;
 
         public void AddAnimation(string id, Animation animation)
         {
@@ -23,6 +25,7 @@ namespace Game2DFramework.Interaction
             CurrentAnimation = _animations[id];
             _currentAnimationId = id;
             CurrentAnimation.Start();
+            if (AnimationClipStarted != null) AnimationClipStarted(_currentAnimationId);
         }
 
         public void AddTransition(string sourceId, string targetId)
@@ -37,6 +40,8 @@ namespace Game2DFramework.Interaction
             CurrentAnimation.Update(elapsedTime);
             if (CurrentAnimation.Delta >= 1.0f)
             {
+                if (AnimationClipFinished != null) AnimationClipFinished(_currentAnimationId);
+                
                 string nextAnimation;
                 if (_transitions.TryGetValue(_currentAnimationId, out nextAnimation))
                 {

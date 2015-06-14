@@ -24,7 +24,7 @@ namespace Game2DFramework.Gui
         {
             if(element.HasAttribute("Source"))
             {
-                Texture = guiSystem.Game.Content.Load<Texture2D>(element.GetAttribute("Source"));
+                Texture = guiSystem.Game.Content.Load<Texture2D>("Textures/" + element.GetAttribute("Source"));
             }
 
             if(Texture != null)
