@@ -41,9 +41,9 @@ namespace Game2DFramework.MonoGame
             var parameters = new GuiSystemSkinParameters
             {
                 XmlSkinDescriptorFile = "GuiSkin/GuiSkin.xml",
-                BigFont = Content.Load<SpriteFont>("BigFont"),
-                NormalFont = Content.Load<SpriteFont>("NormalFont"),
-                SkinTexture = Content.Load<Texture2D>("border")
+                BigFont = Content.Load<SpriteFont>("Spritefonts/BigFont"),
+                NormalFont = Content.Load<SpriteFont>("Spritefonts/NormalFont"),
+                SkinTexture = Content.Load<Texture2D>("Textures/border")
             };
 
             GuiSystem.SetSkin(parameters);

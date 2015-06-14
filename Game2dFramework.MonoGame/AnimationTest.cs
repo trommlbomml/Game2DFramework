@@ -1,5 +1,4 @@
 ﻿using Game2DFramework.Drawing;
-using Game2DFramework.Extensions;
 using Game2DFramework.Interaction;
 using Game2DFramework.States;
 using Microsoft.Xna.Framework;
@@ -21,7 +20,7 @@ namespace Game2DFramework.MonoGame
         {
             _iconAnimator = new Animator();
             _iconAnimator.AddAnimation("BlendIn", new Animation(1.0f, AnimateBlendIn));
-            _iconSprite = new Sprite(Game.Content.Load<Texture2D>("MonoGameLogo"))
+            _iconSprite = new Sprite(Game.Content.Load<Texture2D>("Textures/MonoGameLogo"))
             {
                 Position = new Vector2(Game.ScreenWidth*0.5f, Game.ScreenHeight*0.5f),
                 Alpha = 0.0f
