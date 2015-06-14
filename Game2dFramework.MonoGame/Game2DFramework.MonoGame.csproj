@@ -43,6 +43,11 @@
     <Compile Include="GridTest.cs" />
     <Compile Include="InputGuiTestState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceNames.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceNames.tt</DependentUpon>
+    </Compile>
     <Compile Include="StackPanelWithFrame.cs" />
     <Compile Include="StartState.cs" />
     <Compile Include="TestGame.cs" />
@@ -101,6 +106,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="ResourceNames.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ResourceNames.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
