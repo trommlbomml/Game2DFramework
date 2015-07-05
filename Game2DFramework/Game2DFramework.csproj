@@ -66,6 +66,7 @@
     <Compile Include="Drawing\Particles\SpriteParticleSystem.cs" />
     <Compile Include="Drawing\ShapeRenderer.cs" />
     <Compile Include="Drawing\Sprite.cs" />
+    <Compile Include="Drawing\SpriteText.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Extensions\StringParseExtension.cs" />
     <Compile Include="Extensions\TextureExtensions.cs" />

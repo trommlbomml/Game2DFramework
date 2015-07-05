@@ -32,6 +32,7 @@ namespace Game2DFramework
 
         public int ScreenWidth { get { return GraphicsDevice.Viewport.Width; } }
         public int ScreenHeight { get { return GraphicsDevice.Viewport.Height; } }
+        public Vector2 ScreenSize { get { return new Vector2(ScreenWidth, ScreenHeight);} }
         public DepthRenderer DepthRenderer { get; private set; }
         public ShapeRenderer ShapeRenderer { get; private set; }
         public KeyboardEx Keyboard { get; private set; }
