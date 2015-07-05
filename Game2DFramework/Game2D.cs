@@ -67,7 +67,7 @@ namespace Game2DFramework
             LoadGameProperties();
 
             var width = GetScreenSizeComponent(defaultScreenWidth, GameProperty.GameResolutionXProperty, 800);
-            var height = GetScreenSizeComponent(defaultScreenHeight, GameProperty.GameResolutionXProperty, 600);
+            var height = GetScreenSizeComponent(defaultScreenHeight, GameProperty.GameResolutionYProperty, 600);
 
             GraphicsDeviceManager = new GraphicsDeviceManager(this)
             {
