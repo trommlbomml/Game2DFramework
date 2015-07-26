@@ -1,5 +1,4 @@
-﻿
-using Game2DFramework.Extensions;
+﻿using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,9 +18,10 @@ namespace Game2DFramework.Drawing
         {
             Texture = texture;
             SourceRectangle = sourceRectangle;
+            Origin = Texture.GetCenter();
             Color = Color.White;
             Alpha = 1.0f;
-            Scale = new Vector2(1,1);
+            Scale = new Vector2(1, 1);
             AutoCenter();
         }
 
