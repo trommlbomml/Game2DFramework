@@ -12,4 +12,7 @@
   <Button Margin="4" Id="AnimationsTestButton">
     <TextBlock Text="Animations" Margin="10,2" />
   </Button>
+  <Button Margin="4" Id="CustomGuiSkinTestButton">
+    <TextBlock Text="Custom GUI Skin" Margin="10,2" />
+  </Button>
 </StackPanel>

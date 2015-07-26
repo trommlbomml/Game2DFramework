@@ -8,22 +8,65 @@
 <#@ output extension=".cs" #>
 
 <# 
-var visualStudio = (this.Host as IServiceProvider).GetService(typeof(EnvDTE.DTE))
-                      as EnvDTE.DTE;
-var project = visualStudio.Solution.FindProjectItem(this.Host.TemplateFile)
-                                   .ContainingProject as EnvDTE.Project;
+var rootFolderName = "Content";
+
+var visualStudio = (this.Host as IServiceProvider).GetService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+var project = visualStudio.Solution.FindProjectItem(this.Host.TemplateFile).ContainingProject as EnvDTE.Project;
+
+var baseNamespace = project.Properties.Item("DefaultNamespace").Value.ToString();
 
 ProjectItem processingParentFolder = null;
 foreach(ProjectItem projectItem in project.ProjectItems)
 {
-	if (projectItem.Name == "Content")
+	if (projectItem.Name == rootFolderName)
 	{
 		processingParentFolder = projectItem;
 		break;
 	}
 }
-#>
-static class ResourceNames
+
+if (processingParentFolder != null)
 {
+#>
+namespace <#= baseNamespace #>
+{<#
+	PushIndent("    ");
+	ProcessFolder(processingParentFolder, "ResourceNames", "");
+	PopIndent();
 }
-<##>
+#>
+}
+
+<#+
+	void ProcessFolder(ProjectItem currentProjectItem, string className, string parentPath)
+	{
+#>
+
+public static class <#= className #>
+{
+<#+
+		PushIndent("    ");
+		foreach(ProjectItem projectItem in currentProjectItem.ProjectItems)
+		{
+			if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFolder)
+			{
+				ProcessFolder(projectItem, projectItem.Name, System.IO.Path.Combine(parentPath, projectItem.Name));
+			}
+			else if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFile && projectItem.Name.EndsWith(".xnb"))
+			{
+				ProcessItem(projectItem, parentPath);
+			}
+		}
+		PopIndent();
+#>
+}
+<#+
+}
+
+	void ProcessItem(ProjectItem currentProjectItem, string parentPath)
+	{
+		var resourceName = System.IO.Path.GetFileNameWithoutExtension(currentProjectItem.Name);
+#>public const string <#= resourceName#> = "<#= System.IO.Path.Combine(parentPath, resourceName).Replace("\\", "/")#>";
+<#+
+	}
+#>

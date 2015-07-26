@@ -31,6 +31,7 @@ namespace Game2DFramework.MonoGame
             RegisterState(new GridTest());
             RegisterState(new InputGuiTestState());
             RegisterState(new AnimationTest());
+            RegisterState(new CustomGuiSkin());
             return typeof(AnimationTest);
         }
 
@@ -41,9 +42,9 @@ namespace Game2DFramework.MonoGame
             var parameters = new GuiSystemSkinParameters
             {
                 XmlSkinDescriptorFile = "GuiSkin/GuiSkin.xml",
-                BigFont = Content.Load<SpriteFont>("Spritefonts/BigFont"),
-                NormalFont = Content.Load<SpriteFont>("Spritefonts/NormalFont"),
-                SkinTexture = Content.Load<Texture2D>("Textures/border")
+                BigFont = Content.Load<SpriteFont>(ResourceNames.Spritefonts.BigFont),
+                NormalFont = Content.Load<SpriteFont>(ResourceNames.Spritefonts.NormalFont),
+                SkinTexture = Content.Load<Texture2D>(ResourceNames.Textures.bombrush_guiskin)
             };
 
             GuiSystem.SetSkin(parameters);

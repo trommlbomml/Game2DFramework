@@ -15,7 +15,7 @@ namespace Game2DFramework.MonoGame
 
         protected override void OnInitialize(object enterInformation)
         {
-            _iconSprite = new Sprite(Game.Content.Load<Texture2D>("Textures/MonoGameLogo"))
+            _iconSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.MonoGameLogo))
             {
                 Position = new Vector2(Game.ScreenWidth * 0.5f, Game.ScreenHeight * 0.5f),
                 Alpha = 0.0f

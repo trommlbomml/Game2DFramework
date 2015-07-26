@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame Title="MainMenu">
+  <StackPanel Orientation="Vertical" Width="400">
+    <StackPanel Orientation="Horizontal">
+      <Image Source="icon" />
+      <TextBlock Text="First Entry" Margin="5" />
+    </StackPanel>
+  </StackPanel>
+</Frame>
