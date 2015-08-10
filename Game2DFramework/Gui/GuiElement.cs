@@ -32,6 +32,8 @@ namespace Game2DFramework.Gui
         {
             GuiSystem = guiSystem;
             Children = new List<GuiElement>();
+            HorizontalAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = VerticalAlignment.Middle;
         }
 
         protected GuiElement(GuiSystem guiSystem, XmlElement element)
@@ -39,11 +41,26 @@ namespace Game2DFramework.Gui
         {
             GuiSystem = guiSystem;
             Children = new List<GuiElement>();
+            HorizontalAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = VerticalAlignment.Middle;
 
             if (element.HasAttribute("Width")) Width = int.Parse(element.GetAttribute("Width"));
             if (element.HasAttribute("Height")) Width = int.Parse(element.GetAttribute("Height"));
             if (element.HasAttribute("Margin")) Margin = Thickness.Parse(element.GetAttribute("Margin"));
             if (element.HasAttribute("Id")) Id = element.GetAttribute("Id");
+            if (element.HasAttribute("HorizontalAlignment"))
+            {
+                HorizontalAlignment =
+                    (HorizontalAlignment)
+                        Enum.Parse(typeof (HorizontalAlignment), element.GetAttribute("HorizontalAlignment"));
+            }
+
+            if (element.HasAttribute("VerticalAlignment"))
+            {
+                VerticalAlignment =
+                    (VerticalAlignment)
+                        Enum.Parse(typeof(VerticalAlignment), element.GetAttribute("VerticalAlignment"));
+            }
         }
 
         public TGuiElement FindGuiElementById<TGuiElement>(string id) where TGuiElement : GuiElement
@@ -84,6 +101,8 @@ namespace Game2DFramework.Gui
 
         public int Width { get; set; }
         public int Height { get; set; }
+        public HorizontalAlignment HorizontalAlignment { get; set; }
+        public VerticalAlignment VerticalAlignment { get; set; }
 
         public abstract Rectangle GetMinSize();
 
@@ -112,6 +131,43 @@ namespace Game2DFramework.Gui
         public virtual void OnFocusLost()
         {
             
+        }
+
+        internal Rectangle ArrangeToAlignments(Rectangle availableBounds, Rectangle elementBounds)
+        {
+            var finalRectangle = new Rectangle(0,0,elementBounds.Width, elementBounds.Height);
+
+            switch (HorizontalAlignment)
+            {
+                case HorizontalAlignment.Left:
+                    finalRectangle.X = availableBounds.X;
+                    break;
+                case HorizontalAlignment.Center:
+                    finalRectangle.X = availableBounds.X + (availableBounds.Width/2 - elementBounds.Width/2);
+                    break;
+                case HorizontalAlignment.Right:
+                    finalRectangle.X = availableBounds.Right - elementBounds.Width;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            switch (VerticalAlignment)
+            {
+                case VerticalAlignment.Top:
+                    finalRectangle.Y = availableBounds.Y;
+                    break;
+                case VerticalAlignment.Middle:
+                    finalRectangle.Y = availableBounds.Y + (availableBounds.Height / 2 - elementBounds.Height / 2);
+                    break;
+                case VerticalAlignment.Bottom:
+                    finalRectangle.Y = availableBounds.Bottom - elementBounds.Height;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return finalRectangle;
         }
 
         public virtual GuiElement OnMouseOver()

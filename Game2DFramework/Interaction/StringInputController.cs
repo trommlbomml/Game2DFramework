@@ -8,7 +8,7 @@ namespace Game2DFramework.Interaction
     public class StringInputController
     {
         private readonly List<Keys> _lastPressedKeys;
-        private readonly string[] _validCharacterCodes;
+        private string[] _validCharacterCodes;
 
         public InputType InputType { get; private set; }
         public int MaxInputCharacters { get; private set; }
@@ -18,10 +18,15 @@ namespace Game2DFramework.Interaction
         {
             _lastPressedKeys = new List<Keys>();
             MaxInputCharacters = maxInputCharacters;
-            InputType = inputType;
             CurrentText = string.Empty;
+            SetInputType(inputType);
+        }
 
-            switch (InputType)
+        public void SetInputType(InputType inputType)
+        {
+            if (inputType == InputType) return;
+            InputType = inputType;
+            switch (inputType)
             {
                 case InputType.HostNames:
                     _validCharacterCodes = new[] { Keys.OemPeriod.ToString(), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9" };

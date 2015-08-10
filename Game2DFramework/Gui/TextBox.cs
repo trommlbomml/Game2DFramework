@@ -4,31 +4,38 @@ using Game2DFramework.Drawing;
 using Game2DFramework.Gui.ItemDescriptors;
 using Game2DFramework.Interaction;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework.Gui
 {
     public class TextBox : GuiElement
     {
         private StringInputController _inputController;
-        private readonly TextBlock _contentElement;
-        private SpriteFont _spriteFont;
+        private SpriteText _spriteText;
 
         private NinePatchSprite _border;
         private ActionTimer _cursorAnimatorTimer;
         private bool _isCursorVisible;
         private bool _hasFocus;
 
+        public InputType InputType
+        {
+            get { return _inputController.InputType; }
+            set { _inputController.SetInputType(value); }
+        }
+
         public TextBox(GuiSystem guiSystem) : base(guiSystem)
         {
-            _contentElement = new TextBlock(GuiSystem);
             InitializeDrawElements();
         }
 
         public TextBox(GuiSystem guiSystem, XmlElement element)
             : base(guiSystem, element)
         {
-            _contentElement = new TextBlock(GuiSystem);
+            if (element.HasAttribute("InputType"))
+            {
+                InputType = (InputType) Enum.Parse(typeof (InputType), element.GetAttribute("InputType"));
+            }
+
             InitializeDrawElements();
         }
 
@@ -37,7 +44,8 @@ namespace Game2DFramework.Gui
             var itemDescriptor = GuiSystem.GetSkinItemDescriptor<TextBoxSkinItemDescriptor>();
 
             _border = new NinePatchSprite(itemDescriptor.SkinTexture, itemDescriptor.NormalRectangle, itemDescriptor.Border);
-            _spriteFont = itemDescriptor.NormalFont;
+
+            _spriteText = new SpriteText(itemDescriptor.NormalFont);
 
             _cursorAnimatorTimer = new ActionTimer(OnCursorAnimateTick, 0.5f, true);
             _cursorAnimatorTimer.Start();
@@ -52,9 +60,8 @@ namespace Game2DFramework.Gui
 
         public override Rectangle GetMinSize()
         {
-            var minSizeOfTextBlock = _contentElement.GetMinSize(true);
+            var minSizeOfTextBlock = _spriteText.GetBounds(true);
             minSizeOfTextBlock.Width += _border.FixedBorder.Horizontal;
-
             minSizeOfTextBlock.Height += _border.FixedBorder.Vertical;
 
             return ApplyMarginAndHandleSize(minSizeOfTextBlock);
@@ -71,30 +78,29 @@ namespace Game2DFramework.Gui
             borderBounds.X += _border.FixedBorder.Left;
             borderBounds.Y += _border.FixedBorder.Top;
 
-            _contentElement.Arrange(borderBounds);
+            _spriteText.Position = new Vector2(borderBounds.X, borderBounds.Y);
         }
 
         public override void Update(float elapsedTime)
         {
-            _contentElement.Update(elapsedTime);
             _cursorAnimatorTimer.Update(elapsedTime);
 
             if (_hasFocus)
             {
                 _inputController.Update(Game.Keyboard, elapsedTime);
-                _contentElement.Text = _inputController.CurrentText;
+                _spriteText.Text = _inputController.CurrentText;
             }
         }
 
         public override void Draw()
         {
             _border.Draw(Game.SpriteBatch, Color.White);
-            _contentElement.Draw();
+            _spriteText.Draw(Game.SpriteBatch);
 
             if (_isCursorVisible && _hasFocus)
             {
-                var cursorPos = new Vector2(_contentElement.Bounds.Left, _contentElement.Bounds.Top);
-                Game.SpriteBatch.DrawString(_spriteFont, "I", cursorPos, _contentElement.Color);
+                var bounds = _spriteText.GetBounds(true);
+                Game.ShapeRenderer.DrawRectangle(bounds.Right + 1, bounds.Y, 1, bounds.Height, Color.White);
             }
         }
 

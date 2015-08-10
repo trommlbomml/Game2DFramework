@@ -83,6 +83,7 @@
     <Compile Include="Gui\GuiPanel.cs" />
     <Compile Include="Gui\GuiSystem.cs" />
     <Compile Include="Gui\GuiSystemSkinParameters.cs" />
+    <Compile Include="Gui\HorizontalAlignment.cs" />
     <Compile Include="Gui\Image.cs" />
     <Compile Include="Gui\ItemDescriptors\ButtonSkinItemDescriptor.cs" />
     <Compile Include="Gui\ItemDescriptors\FrameSkinItemDescriptor.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Gui\TextBlock.cs" />
     <Compile Include="Gui\TextBox.cs" />
     <Compile Include="Gui\Thickness.cs" />
+    <Compile Include="Gui\VerticalAlignment.cs" />
     <Compile Include="Input\GamePadEx.cs" />
     <Compile Include="Input\KeyboardEx.cs" />
     <Compile Include="Input\MouseEx.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using Game2DFramework.Drawing;
 using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Microsoft.Xna.Framework;
@@ -9,10 +10,19 @@ namespace Game2DFramework.Gui
 {
     public class TextBlock : GuiElement
     {
-        protected SpriteFont Font { get; private set; }
+        private SpriteText _spriteText;
 
-        public string Text { get; set; }
-        public Color Color { get; set; }
+        public string Text
+        {
+            get { return _spriteText.Text; }
+            set { _spriteText.Text = value; }
+        }
+
+        public Color Color
+        {
+            get { return _spriteText.Color; }
+            set { _spriteText.Color = value; }
+        }
 
         public TextBlock(GuiSystem guiSystem, XmlElement element)
             : base(guiSystem, element)
@@ -29,51 +39,39 @@ namespace Game2DFramework.Gui
 
         private void InitializeDrawElements()
         {
-            Color = Color.White;
             var descriptor = GuiSystem.GetSkinItemDescriptor<TextBlockSkinItemDescriptor>();
-            Font = descriptor.NormalFont;
+            _spriteText = new SpriteText(descriptor.NormalFont);
         }
 
         internal Rectangle GetMinSize(bool includeHeightForEmptyText)
         {
             if (string.IsNullOrEmpty(Text))
             {
-                return ApplyMarginAndHandleSize(includeHeightForEmptyText ? new Rectangle(0,0,0,Font.LineSpacing) : new Rectangle());
+                return ApplyMarginAndHandleSize(includeHeightForEmptyText ? new Rectangle(0,0,0,_spriteText.LineSpacing) : new Rectangle());
             }
 
-            var size = Font.MeasureString(Text);
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(size.X), (int)Math.Round(size.Y)));
+            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(_spriteText.TextSize.X), (int)Math.Round(_spriteText.TextSize.Y)));
         }
 
         public override Rectangle GetMinSize()
         {
             if (string.IsNullOrEmpty(Text)) return ApplyMarginAndHandleSize(new Rectangle());
 
-            var size = Font.MeasureString(Text);
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(size.X), (int)Math.Round(size.Y)));
+            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(_spriteText.TextSize.X), (int)Math.Round(_spriteText.TextSize.Y)));
         }
 
         public override void Arrange(Rectangle target)
         {
-            Bounds = RemoveMargin(new Rectangle(target.X + Margin.Left,
-                                   target.Y + Margin.Top,
-                                   target.Width - Margin.Horizontal,
-                                   target.Height - Margin.Vertical));
+            var availableBounds = RemoveMargin(target);
+            var textSize = _spriteText.TextSize;
+            Bounds = ArrangeToAlignments(availableBounds, new Rectangle(0, 0, (int) textSize.X, (int) textSize.Y));
+
+            _spriteText.Position = new Vector2(Bounds.X, Bounds.Y);
         }
 
         public override void Draw()
         {
-            if (string.IsNullOrEmpty(Text)) return;
-
-            var size = Font.MeasureString(Text);
-            var offset = new Vector2(Bounds.Width * 0.5f - size.X * 0.5f, Bounds.Height * 0.5f - size.Y * 0.5f);
-
-            Game.SpriteBatch.DrawString(Font, Text, (new Vector2(Bounds.X, Bounds.Y) + offset).SnapToPixels(), Color);
-        }
-
-        public override void Update(float elapsedTime)
-        {
-
+            _spriteText.Draw(Game.SpriteBatch);
         }
     }
 }
