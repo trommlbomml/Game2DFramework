@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,7 +18,8 @@ namespace Game2DFramework.Gui.ItemDescriptors
         
         public void Deserialize(XmlElement element)
         {
-            
+            Border = Thickness.Parse(element.GetAttribute("Border"));
+            NormalRectangle = element.GetAttribute("NormalRectangle").ParseRectangle();
         }
     }
 }

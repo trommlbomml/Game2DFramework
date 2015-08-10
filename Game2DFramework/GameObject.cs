@@ -23,6 +23,11 @@ namespace Game2DFramework
             _components.ForEach(c => c.Update(elapsedTime));
         }
 
+        public virtual void Draw()
+        {
+            _components.ForEach(c => c.Draw());
+        }
+
         public virtual void OnCollide(GameObject other)
         {
             

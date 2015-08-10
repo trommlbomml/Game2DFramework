@@ -2,6 +2,7 @@
 using System.Xml;
 using Game2DFramework.Drawing;
 using Game2DFramework.Gui.ItemDescriptors;
+using Game2DFramework.Interaction;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,19 +10,23 @@ namespace Game2DFramework.Gui
 {
     public class TextBox : GuiElement
     {
-        private SpriteFont _font;
-        private NinePatchSprite _border;
+        private readonly TextBlock _contentElement;
+        private SpriteFont _spriteFont;
 
-        public string Text { get; set; }
+        private NinePatchSprite _border;
+        private ActionTimer _cursorAnimatorTimer;
+        private bool _isCursorVisible;
 
         public TextBox(GuiSystem guiSystem) : base(guiSystem)
         {
+            _contentElement = new TextBlock(GuiSystem);
             InitializeDrawElements();
         }
 
         public TextBox(GuiSystem guiSystem, XmlElement element)
             : base(guiSystem, element)
         {
+            _contentElement = new TextBlock(GuiSystem);
             InitializeDrawElements();
         }
 
@@ -30,26 +35,55 @@ namespace Game2DFramework.Gui
             var itemDescriptor = GuiSystem.GetSkinItemDescriptor<TextBoxSkinItemDescriptor>();
 
             _border = new NinePatchSprite(itemDescriptor.SkinTexture, itemDescriptor.NormalRectangle, itemDescriptor.Border);
-            _font = itemDescriptor.NormalFont;
+            _spriteFont = itemDescriptor.NormalFont;
+
+            _cursorAnimatorTimer = new ActionTimer(OnCursorAnimateTick, 0.5f, true);
+            _cursorAnimatorTimer.Start();
+        }
+
+        private void OnCursorAnimateTick()
+        {
+            _isCursorVisible = !_isCursorVisible;
         }
 
         public override Rectangle GetMinSize()
         {
-            return ApplyMarginAndHandleSize(new Rectangle());
+            var minSizeOfTextBlock = _contentElement.GetMinSize(true);
+            minSizeOfTextBlock.Width += _border.FixedBorder.Horizontal;
+            minSizeOfTextBlock.Height += _border.FixedBorder.Vertical;
+
+            return ApplyMarginAndHandleSize(minSizeOfTextBlock);
         }
 
         public override void Arrange(Rectangle target)
         {
-            _border.SetBounds(RemoveMargin(target));
+            var borderBounds = RemoveMargin(target);
+            _border.SetBounds(borderBounds);
+
+            borderBounds.Width -= _border.FixedBorder.Horizontal;
+            borderBounds.Height -= _border.FixedBorder.Vertical;
+            borderBounds.X += _border.FixedBorder.Left;
+            borderBounds.Y += _border.FixedBorder.Top;
+
+            _contentElement.Arrange(borderBounds);
+        }
+
+        public override void Update(float elapsedTime)
+        {
+            _contentElement.Update(elapsedTime);
+            _cursorAnimatorTimer.Update(elapsedTime);
         }
 
         public override void Draw()
         {
             _border.Draw(Game.SpriteBatch, Color.White);
-        }
+            _contentElement.Draw();
 
-        public override void Update(float elapsedTime)
-        {
+            if (_isCursorVisible)
+            {
+                var cursorPos = new Vector2(_contentElement.Bounds.Left, _contentElement.Bounds.Top);
+                Game.SpriteBatch.DrawString(_spriteFont, "I", cursorPos, _contentElement.Color);
+            }
         }
     }
 }

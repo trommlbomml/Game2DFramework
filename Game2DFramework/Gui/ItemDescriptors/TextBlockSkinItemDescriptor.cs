@@ -17,6 +17,7 @@ namespace Game2DFramework.Gui.ItemDescriptors
 
         public void Deserialize(XmlElement element)
         {
+
         }
     }
 }

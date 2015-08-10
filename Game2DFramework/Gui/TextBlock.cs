@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
@@ -10,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework.Gui
 {
-    class TextBlock : GuiElement
+    public class TextBlock : GuiElement
     {
         protected SpriteFont Font { get; private set; }
 
@@ -35,6 +32,17 @@ namespace Game2DFramework.Gui
             Color = Color.White;
             var descriptor = GuiSystem.GetSkinItemDescriptor<TextBlockSkinItemDescriptor>();
             Font = descriptor.NormalFont;
+        }
+
+        internal Rectangle GetMinSize(bool includeHeightForEmptyText)
+        {
+            if (string.IsNullOrEmpty(Text))
+            {
+                return ApplyMarginAndHandleSize(includeHeightForEmptyText ? new Rectangle(0,0,0,Font.LineSpacing) : new Rectangle());
+            }
+
+            var size = Font.MeasureString(Text);
+            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(size.X), (int)Math.Round(size.Y)));
         }
 
         public override Rectangle GetMinSize()

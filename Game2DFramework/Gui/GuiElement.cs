@@ -88,7 +88,5 @@ namespace Game2DFramework.Gui
         public abstract Rectangle GetMinSize();
 
         public abstract void Arrange(Rectangle target);
-
-        public abstract void Draw();
     }
 }
