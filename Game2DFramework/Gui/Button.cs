@@ -12,7 +12,7 @@ namespace Game2DFramework.Gui
         private NinePatchSprite _hoverSprite;
         private bool _isMouseOver;
 
-        public event Action OnClick;
+        public event Action Click;
 
         public Button(GuiSystem guiSystem) : base(guiSystem)
         {
@@ -42,8 +42,10 @@ namespace Game2DFramework.Gui
 
         public override void Arrange(Rectangle target)
         {
-            _normalSprite.SetBounds(RemoveMargin(target));
-            _hoverSprite.SetBounds(RemoveMargin(target));
+            Bounds = RemoveMargin(target);
+
+            _normalSprite.SetBounds(Bounds);
+            _hoverSprite.SetBounds(Bounds);
 
             if (Child != null)
             {
@@ -59,12 +61,27 @@ namespace Game2DFramework.Gui
         public override void Update(float elapsedTime)
         {
             base.Update(elapsedTime);
-            _isMouseOver = _normalSprite.Bounds.Contains((int) Game.Mouse.X, (int) Game.Mouse.Y);
 
-            if (Game.Mouse.IsLeftButtonClicked() && _isMouseOver && OnClick != null)
+            if (Game.Mouse.IsLeftButtonClicked() && _isMouseOver && Click != null)
             {
-                OnClick();
+                Click();
             }
+        }
+
+        public override void OnClick()
+        {
+            if (Click != null) Click();
+        }
+
+        public override GuiElement OnMouseOver()
+        {
+            _isMouseOver = true;
+            return this;
+        }
+
+        public override void OnMouseLeft()
+        {
+            _isMouseOver = false;
         }
 
         public override void Draw()

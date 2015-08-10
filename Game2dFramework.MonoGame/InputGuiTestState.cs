@@ -1,5 +1,4 @@
-﻿using System;
-using Game2DFramework.Gui;
+﻿using Game2DFramework.Gui;
 using Game2DFramework.States;
 using Microsoft.Xna.Framework;
 
@@ -7,16 +6,20 @@ namespace Game2DFramework.MonoGame
 {
     class InputGuiTestState : InitializableState
     {
-        private Frame _frame;
+        private GuiPanel _panel;
 
         protected override void OnEntered(object enterInformation)
         {
-            Game.GuiSystem.ArrangeCenteredToScreen(Game, _frame);
+            
         }
 
         protected override void OnInitialize(object enterInformation)
         {
-            _frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin\\InputBoxes.xml");
+            _panel = new GuiPanel(Game);
+            var frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin\\InputBoxes.xml");
+            Game.GuiSystem.ArrangeCenteredToScreen(Game, frame);
+
+            _panel.AddElement(frame);
         }
 
         public override void OnLeave()
@@ -25,7 +28,7 @@ namespace Game2DFramework.MonoGame
 
         public override StateChangeInformation OnUpdate(float elapsedTime)
         {
-            _frame.Update(elapsedTime);
+            _panel.Update(elapsedTime);
 
             return StateChangeInformation.Empty;
         }
@@ -34,7 +37,7 @@ namespace Game2DFramework.MonoGame
         {
             Game.GraphicsDevice.Clear(Color.Black);
 
-            _frame.Draw();
+            _panel.Draw();
         }
     }
 }

@@ -80,7 +80,9 @@
     <Compile Include="Gui\Grid.cs" />
     <Compile Include="Gui\GridItemDefinition.cs" />
     <Compile Include="Gui\GuiElement.cs" />
+    <Compile Include="Gui\GuiPanel.cs" />
     <Compile Include="Gui\GuiSystem.cs" />
+    <Compile Include="Gui\GuiSystemSkinParameters.cs" />
     <Compile Include="Gui\Image.cs" />
     <Compile Include="Gui\ItemDescriptors\ButtonSkinItemDescriptor.cs" />
     <Compile Include="Gui\ItemDescriptors\FrameSkinItemDescriptor.cs" />

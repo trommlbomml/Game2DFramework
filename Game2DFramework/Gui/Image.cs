@@ -40,8 +40,8 @@ namespace Game2DFramework.Gui
 
         public override void Arrange(Rectangle target)
         {
-            var localBounds = RemoveMargin(target);
-            _position = localBounds.Center.ToVector2();
+            Bounds = RemoveMargin(target);
+            _position = Bounds.Center.ToVector2();
         }
 
         public override void Draw()

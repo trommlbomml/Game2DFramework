@@ -8,27 +8,30 @@ namespace Game2DFramework.MonoGame
 {
     class StartState : InitializableState
     {
-        private GuiElement _root;
+        private GuiPanel _root;
         private StateChangeInformation _stateChangeInformation;
 
         protected override void OnEntered(object enterInformation)
         {
-            Game.GuiSystem.ArrangeCenteredToScreen(Game, _root);
         }
 
         protected override void OnInitialize(object enterInformation)
         {
-            _root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("GuiSkin/StartStateLayout.xml");
+            _root = new GuiPanel(Game);
 
-            SetButtonTransitionTo("StackPanelWithFrameButton", typeof(StackPanelWithFrame));
-            SetButtonTransitionTo("GridTestButton", typeof(GridTest));
-            SetButtonTransitionTo("TextBoxTestButton", typeof(InputGuiTestState));
+            var root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("GuiSkin/StartStateLayout.xml");
+            _root.AddElement(root);
+            Game.GuiSystem.ArrangeCenteredToScreen(Game, root);
+
+            SetButtonTransitionTo(root, "StackPanelWithFrameButton", typeof(StackPanelWithFrame));
+            SetButtonTransitionTo(root, "GridTestButton", typeof(GridTest));
+            SetButtonTransitionTo(root, "TextBoxTestButton", typeof(InputGuiTestState));
         }
 
-        private void SetButtonTransitionTo(string buttonId, Type targetState)
+        private void SetButtonTransitionTo(GuiElement root, string buttonId, Type targetState)
         {
-            var button = _root.FindGuiElementById<Button>(buttonId);
-            button.OnClick += () =>
+            var button = root.FindGuiElementById<Button>(buttonId);
+            button.Click += () =>
             {
                 _stateChangeInformation = StateChangeInformation.StateChange(targetState, typeof (SlideTransition));
             };

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml;
 using Game2DFramework.Drawing;
-using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -81,15 +80,15 @@ namespace Game2DFramework.Gui
 
         public override void Arrange(Rectangle target)
         {
-            target = RemoveMargin(target);
+            Bounds = RemoveMargin(target);
 
-            _contentBorder.SetBounds(target);
+            _contentBorder.SetBounds(Bounds);
 
             var headerSize = GetHeaderSize();
 
             if (!string.IsNullOrEmpty(Title))
             {
-                _headerBorder.SetBounds(new Rectangle(target.X + target.Width / 2 - headerSize.Width / 2, target.Y, headerSize.Width, headerSize.Height));
+                _headerBorder.SetBounds(new Rectangle(Bounds.X + Bounds.Width / 2 - headerSize.Width / 2, Bounds.Y, headerSize.Width, headerSize.Height));
                 var bounds = _contentBorder.Bounds;
                 bounds.Y += headerSize.Height / 2;
                 bounds.Height -= headerSize.Height / 2;
@@ -98,7 +97,7 @@ namespace Game2DFramework.Gui
 
             if (Child != null)
             {
-                var rectangle = target;
+                var rectangle = Bounds;
                 rectangle.X += _contentBorder.FixedBorder.Top;
                 rectangle.Y += string.IsNullOrEmpty(Title) ? _contentBorder.FixedBorder.Left: headerSize.Height;
                 rectangle.Width -= _contentBorder.FixedBorder.Vertical;

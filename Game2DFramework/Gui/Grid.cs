@@ -106,13 +106,13 @@ namespace Game2DFramework.Gui
 
         public override void Arrange(Rectangle target)
         {
-            target = RemoveMargin(target);
+            Bounds = RemoveMargin(target);
 
             var rowHeights = new Dictionary<int, int>();
             var columnWidths = new Dictionary<int, int>();
 
-            var totalHorizontalSpace = target.Width;
-            var totalVerticalSpace = target.Height;
+            var totalHorizontalSpace = Bounds.Width;
+            var totalVerticalSpace = Bounds.Height;
 
             var autoColumns = _columnDefinitions.Where(c => c.Size == GridItemDefinition.AutoSize).ToArray();
             var maxWidthColumns = _columnDefinitions.Where(c => c.Size == GridItemDefinition.MaxSize).ToArray();

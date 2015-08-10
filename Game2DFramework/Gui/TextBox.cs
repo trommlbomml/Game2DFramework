@@ -10,12 +10,14 @@ namespace Game2DFramework.Gui
 {
     public class TextBox : GuiElement
     {
+        private StringInputController _inputController;
         private readonly TextBlock _contentElement;
         private SpriteFont _spriteFont;
 
         private NinePatchSprite _border;
         private ActionTimer _cursorAnimatorTimer;
         private bool _isCursorVisible;
+        private bool _hasFocus;
 
         public TextBox(GuiSystem guiSystem) : base(guiSystem)
         {
@@ -39,6 +41,8 @@ namespace Game2DFramework.Gui
 
             _cursorAnimatorTimer = new ActionTimer(OnCursorAnimateTick, 0.5f, true);
             _cursorAnimatorTimer.Start();
+
+            _inputController = new StringInputController(InputType.AlphaNumeric, 10);
         }
 
         private void OnCursorAnimateTick()
@@ -58,9 +62,10 @@ namespace Game2DFramework.Gui
 
         public override void Arrange(Rectangle target)
         {
-            var borderBounds = RemoveMargin(target);
-            _border.SetBounds(borderBounds);
+            Bounds = RemoveMargin(target);
+            _border.SetBounds(Bounds);
 
+            var borderBounds = Bounds;
             borderBounds.Width -= _border.FixedBorder.Horizontal;
             borderBounds.Height -= _border.FixedBorder.Vertical;
             borderBounds.X += _border.FixedBorder.Left;
@@ -73,6 +78,12 @@ namespace Game2DFramework.Gui
         {
             _contentElement.Update(elapsedTime);
             _cursorAnimatorTimer.Update(elapsedTime);
+
+            if (_hasFocus)
+            {
+                _inputController.Update(Game.Keyboard, elapsedTime);
+                _contentElement.Text = _inputController.CurrentText;
+            }
         }
 
         public override void Draw()
@@ -80,11 +91,22 @@ namespace Game2DFramework.Gui
             _border.Draw(Game.SpriteBatch, Color.White);
             _contentElement.Draw();
 
-            if (_isCursorVisible)
+            if (_isCursorVisible && _hasFocus)
             {
                 var cursorPos = new Vector2(_contentElement.Bounds.Left, _contentElement.Bounds.Top);
                 Game.SpriteBatch.DrawString(_spriteFont, "I", cursorPos, _contentElement.Color);
             }
+        }
+
+        public override GuiElement OnGotFocus()
+        {
+            _hasFocus = true;
+            return this;
+        }
+
+        public override void OnFocusLost()
+        {
+            _hasFocus = false;
         }
     }
 }

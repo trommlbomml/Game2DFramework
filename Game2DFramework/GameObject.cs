@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game2DFramework.Components;
-using Microsoft.Xna.Framework;
 
 namespace Game2DFramework
 {

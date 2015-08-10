@@ -88,5 +88,49 @@ namespace Game2DFramework.Gui
         public abstract Rectangle GetMinSize();
 
         public abstract void Arrange(Rectangle target);
+
+        public virtual void OnClick()
+        {
+            
+        }
+
+        public virtual GuiElement OnGotFocus()
+        {
+            if (Children.Count == 0) return null;
+
+            foreach (var guiElement in Children)
+            {
+                if (guiElement.Bounds.Contains(Game.Mouse.X, Game.Mouse.Y))
+                {
+                    return guiElement.OnGotFocus();
+                }
+            }
+
+            return null;
+        }
+
+        public virtual void OnFocusLost()
+        {
+            
+        }
+
+        public virtual GuiElement OnMouseOver()
+        {
+            if (Children.Count == 0) return null;
+            
+            foreach (var guiElement in Children)
+            {
+                if (guiElement.Bounds.Contains(Game.Mouse.X, Game.Mouse.Y))
+                {
+                    return guiElement.OnMouseOver();
+                }
+            }
+
+            return null;
+        }
+
+        public virtual void OnMouseLeft()
+        {
+        }
     }
 }
