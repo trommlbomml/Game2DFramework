@@ -64,46 +64,44 @@ namespace Game2DFramework.Gui
 
         private void AddChild(int column, int row, GuiElement element)
         {
-            //var linearIndex = row*_columnDefinitions.Count + column;
-
             _childElementsByLinearTableIndex.Add(new Tuple<int, int>(column, row), element);
             Children.Add(element);
         }
 
         public override Rectangle GetMinSize()
         {
-            var rowHeights = new Dictionary<int, int>();
-            var columnWidths = new Dictionary<int, int>();
+            var maxHeightOfRow = new Dictionary<int, int>();
+            var maxWidthOfColumn = new Dictionary<int, int>();
 
             foreach (var elementByIndex in _childElementsByLinearTableIndex)
             {
-                //var row = elementByIndex.Key /_rowDefinitions.Count;
-                //var column = elementByIndex.Key % _rowDefinitions.Count;
-
                 var column = elementByIndex.Key.Item1;
                 var row = elementByIndex.Key.Item2;
                 var minSizeOfElement = elementByIndex.Value.GetMinSize();
 
-                if (rowHeights.ContainsKey(row))
+                if (maxHeightOfRow.ContainsKey(row))
                 {
-                    rowHeights[row] += minSizeOfElement.Height;    
+                    maxHeightOfRow[row] = Math.Max(maxHeightOfRow[row], minSizeOfElement.Height);    
                 }
                 else
                 {
-                    rowHeights[row] = minSizeOfElement.Height;
+                    maxHeightOfRow[row] = minSizeOfElement.Height;
                 }
 
-                if (columnWidths.ContainsKey(column))
+                if (maxWidthOfColumn.ContainsKey(column))
                 {
-                    columnWidths[column] += minSizeOfElement.Width;    
+                    maxWidthOfColumn[column] = Math.Max(maxWidthOfColumn[column], minSizeOfElement.Width);    
                 }
                 else
                 {
-                    columnWidths[column] = minSizeOfElement.Width;    
+                    maxWidthOfColumn[column] = minSizeOfElement.Width;    
                 }
             }
 
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, columnWidths.Values.Max(), rowHeights.Values.Max()));
+            var totalHeight = maxHeightOfRow.Sum(r => r.Value);
+            var totalWidth = maxWidthOfColumn.Sum(r => r.Value);
+
+            return ApplyMarginAndHandleSize(new Rectangle(0, 0, totalWidth, totalHeight));
         }
 
         public override void Arrange(Rectangle target)
