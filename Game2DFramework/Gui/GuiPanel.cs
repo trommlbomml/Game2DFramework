@@ -62,7 +62,7 @@ namespace Game2DFramework.Gui
             if (newFocusedElement != _focusedElement)
             {
                 if (_focusedElement != null) _focusedElement.OnFocusLost();
-                _currentMouseOverElement = newFocusedElement;
+                _focusedElement = newFocusedElement;
             }
         }
 

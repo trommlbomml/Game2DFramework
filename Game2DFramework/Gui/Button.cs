@@ -58,16 +58,6 @@ namespace Game2DFramework.Gui
             }
         }
 
-        public override void Update(float elapsedTime)
-        {
-            base.Update(elapsedTime);
-
-            if (Game.Mouse.IsLeftButtonClicked() && _isMouseOver && Click != null)
-            {
-                Click();
-            }
-        }
-
         public override void OnClick()
         {
             if (Click != null) Click();
