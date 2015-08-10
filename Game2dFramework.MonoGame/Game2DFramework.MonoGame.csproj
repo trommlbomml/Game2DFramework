@@ -40,7 +40,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimationTest.cs" />
-    <Compile Include="CustomGuiSkin.cs" />
     <Compile Include="GridTest.cs" />
     <Compile Include="InputGuiTestState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -22,6 +22,7 @@ namespace Game2DFramework.MonoGame
         public TestGame()
             : base(1024, 768)
         {
+            Window.Title = "Game2D Framework Test Game";
         }
 
         protected override Type RegisterStates()
@@ -31,7 +32,6 @@ namespace Game2DFramework.MonoGame
             RegisterState(new GridTest());
             RegisterState(new InputGuiTestState());
             RegisterState(new AnimationTest());
-            RegisterState(new CustomGuiSkin());
             return typeof(AnimationTest);
         }
 
