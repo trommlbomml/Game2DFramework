@@ -50,6 +50,7 @@ namespace Game2DFramework.Gui
         {
             var minSizeOfTextBlock = _contentElement.GetMinSize(true);
             minSizeOfTextBlock.Width += _border.FixedBorder.Horizontal;
+
             minSizeOfTextBlock.Height += _border.FixedBorder.Vertical;
 
             return ApplyMarginAndHandleSize(minSizeOfTextBlock);
