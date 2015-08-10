@@ -46,6 +46,7 @@ namespace Game2DFramework.Gui
             _border = new NinePatchSprite(itemDescriptor.SkinTexture, itemDescriptor.NormalRectangle, itemDescriptor.Border);
 
             _spriteText = new SpriteText(itemDescriptor.NormalFont);
+            _spriteText.HorizontalAlignment = HorizontalAlignment.Left; 
 
             _cursorAnimatorTimer = new ActionTimer(OnCursorAnimateTick, 0.5f, true);
             _cursorAnimatorTimer.Start();
@@ -78,7 +79,7 @@ namespace Game2DFramework.Gui
             borderBounds.X += _border.FixedBorder.Left;
             borderBounds.Y += _border.FixedBorder.Top;
 
-            _spriteText.Position = new Vector2(borderBounds.X, borderBounds.Y);
+            _spriteText.SetTargetRectangle(borderBounds);
         }
 
         public override void Update(float elapsedTime)

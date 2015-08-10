@@ -68,6 +68,7 @@
     <Compile Include="Drawing\Sprite.cs" />
     <Compile Include="Drawing\SpriteText.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
+    <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Extensions\StringParseExtension.cs" />
     <Compile Include="Extensions\TextureExtensions.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />

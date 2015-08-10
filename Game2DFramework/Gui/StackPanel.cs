@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml;
+using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace Game2DFramework.Gui
@@ -63,8 +63,22 @@ namespace Game2DFramework.Gui
         {
             Bounds = RemoveMargin(target);
 
+            var arrangedBounds = new Rectangle();
             var startX = Bounds.X;
             var startY = Bounds.Y;
+            arrangedBounds.X = startX;
+            arrangedBounds.Y = startY;
+
+            if (Orientation == Orientation.Vertical)
+            {
+                arrangedBounds.Width = target.Width;
+            }
+            else
+            {
+                arrangedBounds.Height = target.Height;
+            }
+
+            var childBounds = new List<Rectangle>();
 
             foreach (var guiElement in Children)
             {
@@ -76,13 +90,26 @@ namespace Game2DFramework.Gui
                 if (Orientation == Orientation.Vertical)
                 {
                     startY += minSize.Height;
+                    arrangedBounds.Height += minSize.Height;
                 }
                 else
                 {
                     startX += minSize.Width;
+                    arrangedBounds.Width += minSize.Width;
                 }
 
-                guiElement.Arrange(childArrange);
+                childBounds.Add(childArrange);
+            }
+
+            var newBoundsAligned = ArrangeToAlignments(target, arrangedBounds);
+            var differenceX = newBoundsAligned.X - target.X;
+            var differenceY = newBoundsAligned.Y - target.Y;
+
+            var i = 0;
+            foreach (var guiElement in Children)
+            {
+                var rectangle = childBounds.ElementAt(i++).Translate(differenceX, differenceY);
+                guiElement.Arrange(rectangle);
             }
         }
 

@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Xml;
 using Game2DFramework.Drawing;
-using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Game2DFramework.Gui
 {
@@ -15,7 +14,10 @@ namespace Game2DFramework.Gui
         public string Text
         {
             get { return _spriteText.Text; }
-            set { _spriteText.Text = value; }
+            set
+            {
+                _spriteText.Text = value;
+            }
         }
 
         public Color Color
@@ -41,6 +43,9 @@ namespace Game2DFramework.Gui
         {
             var descriptor = GuiSystem.GetSkinItemDescriptor<TextBlockSkinItemDescriptor>();
             _spriteText = new SpriteText(descriptor.NormalFont);
+
+            _spriteText.HorizontalAlignment = HorizontalAlignment;
+            _spriteText.VerticalAlignment = VerticalAlignment;
         }
 
         internal Rectangle GetMinSize(bool includeHeightForEmptyText)
@@ -55,18 +60,13 @@ namespace Game2DFramework.Gui
 
         public override Rectangle GetMinSize()
         {
-            if (string.IsNullOrEmpty(Text)) return ApplyMarginAndHandleSize(new Rectangle());
-
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(_spriteText.TextSize.X), (int)Math.Round(_spriteText.TextSize.Y)));
+            return GetMinSize(false);
         }
 
         public override void Arrange(Rectangle target)
         {
-            var availableBounds = RemoveMargin(target);
-            var textSize = _spriteText.TextSize;
-            Bounds = ArrangeToAlignments(availableBounds, new Rectangle(0, 0, (int) textSize.X, (int) textSize.Y));
-
-            _spriteText.Position = new Vector2(Bounds.X, Bounds.Y);
+            Bounds = RemoveMargin(target);
+            _spriteText.SetTargetRectangle(Bounds);
         }
 
         public override void Draw()
