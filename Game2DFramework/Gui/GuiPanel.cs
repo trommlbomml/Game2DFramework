@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Game2DFramework.Gui
 {
@@ -22,7 +23,16 @@ namespace Game2DFramework.Gui
         {
             base.Update(elapsedTime);
 
-            foreach (var element in _elements)
+            if (_currentMouseOverElement !=null && !_currentMouseOverElement.IsActive)
+            {
+                _currentMouseOverElement = null;
+            }
+            if (_focusedElement != null && !_focusedElement.IsActive)
+            {
+                _focusedElement = null;
+            }
+
+            foreach (var element in _elements.Where(e => e.IsActive))
             {
                 UpdateElementUiEvents(element);
                 element.Update(elapsedTime);
@@ -84,7 +94,10 @@ namespace Game2DFramework.Gui
         public override void Draw()
         {
             base.Draw();
-            _elements.ForEach(e => e.Draw());
+            foreach (var element in _elements.Where(e => e.IsActive))
+            {
+                element.Draw();
+            }
         }
     }
 }

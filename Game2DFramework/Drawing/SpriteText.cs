@@ -96,8 +96,8 @@ namespace Game2DFramework.Drawing
         {
             var bounds = string.IsNullOrEmpty(_text) ? new Rectangle(0, 0, 0,lineSpacingHeightForEmpty ? LineSpacing : 0) : new Rectangle(0,0, (int) TextSize.X, (int) TextSize.Y);
 
-            bounds.X = (int) Position.X;
-            bounds.Y = (int) Position.Y;
+            bounds.X = (int) (Position.X - Origin.X);
+            bounds.Y =  (int) (Position.Y - Origin.Y);
 
             return bounds;
         }

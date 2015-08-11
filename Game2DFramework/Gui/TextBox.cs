@@ -31,12 +31,12 @@ namespace Game2DFramework.Gui
         public TextBox(GuiSystem guiSystem, XmlElement element)
             : base(guiSystem, element)
         {
+            InitializeDrawElements();
+
             if (element.HasAttribute("InputType"))
             {
-                InputType = (InputType) Enum.Parse(typeof (InputType), element.GetAttribute("InputType"));
+                InputType = (InputType)Enum.Parse(typeof(InputType), element.GetAttribute("InputType"));
             }
-
-            InitializeDrawElements();
         }
 
         private void InitializeDrawElements()
@@ -114,6 +114,12 @@ namespace Game2DFramework.Gui
         public override void OnFocusLost()
         {
             _hasFocus = false;
+        }
+
+        public string Text
+        {
+            get { return _spriteText.Text; }
+            set { _spriteText.Text = value; }
         }
     }
 }

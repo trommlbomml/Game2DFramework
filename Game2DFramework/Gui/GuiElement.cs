@@ -7,7 +7,21 @@ namespace Game2DFramework.Gui
 {
     public abstract class GuiElement : GameObject
     {
+        private bool _isActive;
         public const int SizeNotSet = int.MinValue;
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    Children.ForEach(c => c.IsActive = _isActive);
+                }
+            }
+        }
 
         protected GuiSystem GuiSystem { get; private set; }
 
@@ -34,6 +48,7 @@ namespace Game2DFramework.Gui
             Children = new List<GuiElement>();
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Middle;
+            IsActive = true;
         }
 
         protected GuiElement(GuiSystem guiSystem, XmlElement element)
@@ -43,6 +58,7 @@ namespace Game2DFramework.Gui
             Children = new List<GuiElement>();
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Middle;
+            IsActive = true;
 
             if (element.HasAttribute("Width")) Width = int.Parse(element.GetAttribute("Width"));
             if (element.HasAttribute("Height")) Width = int.Parse(element.GetAttribute("Height"));
