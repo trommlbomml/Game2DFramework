@@ -48,11 +48,13 @@ namespace Game2DFramework.Drawing
             _commulativeFixedHeight = _topBorder + _bottomBorder;
             MinSize = new Rectangle(0,0, _commulativeFixedWidth, _commulativeFixedHeight);
             FixedBorder = new Thickness(leftBorder, topBorder, rightBorder, bottomBorder);
+            Color = Color.White;
         }
 
         public Rectangle MinSize { get; private set; }
         public Rectangle Bounds { get; private set; }
         public Thickness FixedBorder { get; private set; }
+        public Color Color { get; set; }
 
         public void AddPatchField(Rectangle source, Rectangle target)
         {
@@ -133,15 +135,15 @@ namespace Game2DFramework.Drawing
             Bounds = bounds;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Color color)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            _patchFields.ForEach(n => spriteBatch.Draw(_texture, n.Item2, n.Item1, color));
+            _patchFields.ForEach(n => spriteBatch.Draw(_texture, n.Item2, n.Item1, Color));
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle targetRectangle, Color color)
+        public void Draw(SpriteBatch spriteBatch, Rectangle targetRectangle)
         {
             SetBounds(targetRectangle);
-            _patchFields.ForEach(n => spriteBatch.Draw(_texture, n.Item2, n.Item1, color));
+            _patchFields.ForEach(n => spriteBatch.Draw(_texture, n.Item2, n.Item1, Color));
         }
     }
 }

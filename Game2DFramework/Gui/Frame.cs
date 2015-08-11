@@ -26,6 +26,16 @@ namespace Game2DFramework.Gui
             }
         }
 
+        public Color Color
+        {
+            get { return _contentBorder.Color; }
+            set
+            {
+                _contentBorder.Color = value;
+                _headerBorder.Color = value;
+            }
+        }
+
         public Frame(GuiSystem guiSystem)
             : base(guiSystem)
         {
@@ -108,10 +118,10 @@ namespace Game2DFramework.Gui
 
         public override void Draw()
         {
-            _contentBorder.Draw(Game.SpriteBatch, Color.White);
+            _contentBorder.Draw(Game.SpriteBatch);
             if (!string.IsNullOrEmpty(Title))
             {
-                _headerBorder.Draw(Game.SpriteBatch, Color.White);
+                _headerBorder.Draw(Game.SpriteBatch);
                 Game.SpriteBatch.DrawString(_headerFont, Title, new Vector2(_headerBorder.Bounds.X + _headerBorder.FixedBorder.Left, _headerBorder.Bounds.Y + _headerBorder.FixedBorder.Top), Color.White);
             }
 

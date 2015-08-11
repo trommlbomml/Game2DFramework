@@ -95,7 +95,7 @@ namespace Game2DFramework.Gui
 
         public override void Draw()
         {
-            _border.Draw(Game.SpriteBatch, Color.White);
+            _border.Draw(Game.SpriteBatch);
             _spriteText.Draw(Game.SpriteBatch);
 
             if (_isCursorVisible && _hasFocus)

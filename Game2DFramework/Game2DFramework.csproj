@@ -54,7 +54,6 @@
     <Compile Include="Drawing\Cursor.cs" />
     <Compile Include="Drawing\CursorType.cs" />
     <Compile Include="Drawing\DepthRenderer.cs" />
-    <Compile Include="Drawing\Dialog.cs" />
     <Compile Include="Drawing\IDepthSortable.cs" />
     <Compile Include="Drawing\NinePatchSprite.cs" />
     <Compile Include="Drawing\Particles\DefaultEmitter.cs" />

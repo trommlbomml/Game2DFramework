@@ -78,11 +78,11 @@ namespace Game2DFramework.Gui
         {
             if (_isMouseOver)
             {
-                _hoverSprite.Draw(Game.SpriteBatch, Color.White);
+                _hoverSprite.Draw(Game.SpriteBatch);
             }
             else
             {
-                _normalSprite.Draw(Game.SpriteBatch, Color.White);   
+                _normalSprite.Draw(Game.SpriteBatch);   
             }
             base.Draw();
         }
