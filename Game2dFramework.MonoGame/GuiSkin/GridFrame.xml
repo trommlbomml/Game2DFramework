@@ -16,7 +16,7 @@
     <Image Grid.Row="0" Grid.Column="2" Source="icon" />
 
     <Image Grid.Row="1" Grid.Column="0" Source="icon" />
-    <Image Grid.Row="1" Grid.Column="1" Source="smilie" Margin="10,20" />
+    <Image Grid.Row="1" Grid.Column="1" Source="smilie"/>
     <Image Grid.Row="1" Grid.Column="2" Source="icon" />
 
     <Image Grid.Row="2" Grid.Column="0" Source="icon" />

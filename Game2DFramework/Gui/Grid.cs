@@ -151,9 +151,7 @@ namespace Game2DFramework.Gui
                     rowHeights.Add(rowDefininition.Index, sizePerMaxHeightRow);
                 }
             }
-
-
-
+            
             var startY = Bounds.Y;
             for (var y = 0; y < _rowDefinitions.Count; y++)
             {

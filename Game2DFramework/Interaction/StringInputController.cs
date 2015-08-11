@@ -11,13 +11,13 @@ namespace Game2DFramework.Interaction
         private string[] _validCharacterCodes;
 
         public InputType InputType { get; private set; }
-        public int MaxInputCharacters { get; private set; }
+        public int MaxInputCharacters { get; set; }
         public string CurrentText { get; set; }
 
-        public StringInputController(InputType inputType, int maxInputCharacters)
+        public StringInputController(InputType inputType)
         {
             _lastPressedKeys = new List<Keys>();
-            MaxInputCharacters = maxInputCharacters;
+            MaxInputCharacters = 256;
             CurrentText = string.Empty;
             SetInputType(inputType);
         }

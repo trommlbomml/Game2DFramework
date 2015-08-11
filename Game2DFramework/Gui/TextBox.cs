@@ -37,6 +37,16 @@ namespace Game2DFramework.Gui
             {
                 InputType = (InputType)Enum.Parse(typeof(InputType), element.GetAttribute("InputType"));
             }
+
+            if (element.HasAttribute("MaxInputCharacters"))
+            {
+                MaxInputCharacters = int.Parse(element.GetAttribute("MaxInputCharacters"));
+            }
+
+            if (element.HasAttribute("Text"))
+            {
+                Text = element.GetAttribute("Text");
+            }
         }
 
         private void InitializeDrawElements()
@@ -51,7 +61,7 @@ namespace Game2DFramework.Gui
             _cursorAnimatorTimer = new ActionTimer(OnCursorAnimateTick, 0.5f, true);
             _cursorAnimatorTimer.Start();
 
-            _inputController = new StringInputController(InputType.AlphaNumeric, 10);
+            _inputController = new StringInputController(InputType.AlphaNumeric);
         }
 
         private void OnCursorAnimateTick()
@@ -116,10 +126,20 @@ namespace Game2DFramework.Gui
             _hasFocus = false;
         }
 
+        public int MaxInputCharacters
+        {
+            get { return _inputController.MaxInputCharacters; }
+            set { _inputController.MaxInputCharacters = value; }
+        }
+
         public string Text
         {
             get { return _spriteText.Text; }
-            set { _spriteText.Text = value; }
+            set
+            {
+                _spriteText.Text = value;
+                _inputController.CurrentText = value;
+            }
         }
     }
 }

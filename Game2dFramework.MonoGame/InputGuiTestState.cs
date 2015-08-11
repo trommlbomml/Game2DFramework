@@ -17,8 +17,6 @@ namespace Game2DFramework.MonoGame
         {
             _panel = new GuiPanel(Game);
             var frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin\\InputBoxes.xml");
-            Game.GuiSystem.ArrangeCenteredToScreen(Game, frame);
-
             _panel.AddElement(frame);
         }
 

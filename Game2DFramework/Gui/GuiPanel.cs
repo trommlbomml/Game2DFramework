@@ -17,6 +17,7 @@ namespace Game2DFramework.Gui
         public void AddElement(GuiElement element)
         {
             _elements.Add(element);
+            element.Arrange(Game.GetScreenRectangle());
         }
 
         public override void Update(float elapsedTime)

@@ -61,14 +61,6 @@ namespace Game2DFramework.Gui
             return (TGuiElement)GuiElement.CreateFromXmlType(this, document.DocumentElement);
         }
 
-        public void ArrangeCenteredToScreen(Game2D game, GuiElement guiElement)
-        {
-            var rect = guiElement.GetMinSize();
-            rect.X = game.ScreenWidth / 2 - rect.Width / 2;
-            rect.Y = game.ScreenHeight / 2 - rect.Height / 2;
-            guiElement.Arrange(rect);
-        }
-
         internal TSkinItemDescriptor GetSkinItemDescriptor<TSkinItemDescriptor>()
             where TSkinItemDescriptor : SkinItemDescriptor
         {

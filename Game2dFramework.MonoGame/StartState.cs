@@ -21,7 +21,6 @@ namespace Game2DFramework.MonoGame
 
             var root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("GuiSkin/StartStateLayout.xml");
             _root.AddElement(root);
-            Game.GuiSystem.ArrangeCenteredToScreen(Game, root);
 
             SetButtonTransitionTo(root, "StackPanelWithFrameButton", typeof(StackPanelWithFrame));
             SetButtonTransitionTo(root, "GridTestButton", typeof(GridTest));

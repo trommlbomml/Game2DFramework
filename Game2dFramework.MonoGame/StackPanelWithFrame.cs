@@ -6,16 +6,17 @@ namespace Game2DFramework.MonoGame
 {
     class StackPanelWithFrame : InitializableState
     {
-        private Frame _frame;
+        private GuiPanel _panel;
 
         protected override void OnEntered(object enterInformation)
         {
-            Game.GuiSystem.ArrangeCenteredToScreen(Game, _frame);
+            
         }
 
         protected override void OnInitialize(object enterInformation)
         {
-            _frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin/SampleFrame.xml");
+            _panel = new GuiPanel(Game);
+            _panel.AddElement(Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin/SampleFrame.xml"));
         }
 
         public override void OnLeave()
@@ -24,14 +25,14 @@ namespace Game2DFramework.MonoGame
 
         public override StateChangeInformation OnUpdate(float elapsedTime)
         {
-            _frame.Update(elapsedTime);
+            _panel.Update(elapsedTime);
             return StateChangeInformation.Empty;
         }
 
         public override void OnDraw(float elapsedTime)
         {
             Game.GraphicsDevice.Clear(Color.Black);
-            _frame.Draw();
+            _panel.Draw();
         }
     }
 }

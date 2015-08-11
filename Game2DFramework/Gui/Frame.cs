@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using System.Xml;
 using Game2DFramework.Drawing;
+using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,32 +54,12 @@ namespace Game2DFramework.Gui
 
         public override Rectangle GetMinSize()
         {
-            if (Child == null)
-            {
-                if(string.IsNullOrEmpty(Title)) return _contentBorder.MinSize;
+            var headerSize = GetHeaderSize();
+            var childContentSize = Child == null ? Rectangle.Empty : Child.GetMinSize();
 
-                var headerSize = GetHeaderSize();
-                var size = _headerBorder.MinSize;
-                size.Width = Math.Max(size.Width, headerSize.Width);
-                size.Height = Math.Max(size.Height, headerSize.Height);
-                return size;
-            }
+            var width = Math.Max(childContentSize.Width + _contentBorder.FixedBorder.Horizontal, headerSize.Width);
 
-            var childMinSize = Child.GetMinSize();
-
-            var minSize = new Rectangle(0, 0, childMinSize.Width + _headerBorder.MinSize.Width, childMinSize.Height + _contentBorder.MinSize.Height);
-            if (!string.IsNullOrEmpty(Title))
-            {
-                var headerSize = GetHeaderSize();
-                minSize.Width = Math.Max(minSize.Width, headerSize.Width + _headerBorder.MinSize.Width);
-                minSize.Height = headerSize.Height + childMinSize.Height + _headerBorder.MinSize.Height;
-            }
-            else
-            {
-                minSize.Height += _headerBorder.MinSize.Height;
-            }
-
-            return ApplyMarginAndHandleSize(minSize);
+            return new Rectangle(0, 0, width, childContentSize.Height+_contentBorder.FixedBorder.Vertical+headerSize.Height/2);
         }
 
         private Rectangle GetHeaderSize()
@@ -92,28 +74,35 @@ namespace Game2DFramework.Gui
         {
             Bounds = RemoveMargin(target);
 
-            _contentBorder.SetBounds(Bounds);
-
             var headerSize = GetHeaderSize();
+            var childContentSize = Child == null ? Rectangle.Empty : Child.GetMinSize();
 
-            if (!string.IsNullOrEmpty(Title))
-            {
-                _headerBorder.SetBounds(new Rectangle(Bounds.X + Bounds.Width / 2 - headerSize.Width / 2, Bounds.Y, headerSize.Width, headerSize.Height));
-                var bounds = _contentBorder.Bounds;
-                bounds.Y += headerSize.Height / 2;
-                bounds.Height -= headerSize.Height / 2;
-                _contentBorder.SetBounds(bounds);
-            }
+            var contentBorderBounds = new Rectangle(Bounds.X, Bounds.Y + headerSize.Height/2,
+                childContentSize.Width + _contentBorder.FixedBorder.Horizontal,
+                childContentSize.Height + _contentBorder.FixedBorder.Vertical);
 
-            if (Child != null)
-            {
-                var rectangle = Bounds;
-                rectangle.X += _contentBorder.FixedBorder.Top;
-                rectangle.Y += string.IsNullOrEmpty(Title) ? _contentBorder.FixedBorder.Left: headerSize.Height;
-                rectangle.Width -= _contentBorder.FixedBorder.Vertical;
-                rectangle.Height -= string.IsNullOrEmpty(Title) ? _contentBorder.FixedBorder.Vertical : _contentBorder.FixedBorder.Top + headerSize.Height;
-                Child.Arrange(rectangle);
-            }
+            var headerBorderBounds = string.IsNullOrEmpty(Title)
+                ? contentBorderBounds
+                : new Rectangle(contentBorderBounds.X + contentBorderBounds.Width / 2 - headerSize.Width / 2, Bounds.Y, headerSize.Width,
+                    headerSize.Height);
+
+            var contentBounds = childContentSize;
+            contentBounds.X = contentBorderBounds.X + _contentBorder.FixedBorder.Left;
+            contentBounds.Y = contentBorderBounds.Y + Math.Max(headerSize.Height /2, _contentBorder.FixedBorder.Top);
+            
+            var merged = Rectangle.Union(contentBorderBounds, headerBorderBounds);
+            var arranged = ArrangeToAlignments(Bounds, merged);
+
+            var differenceX = arranged.X - merged.X;
+            var differenceY = arranged.Y - merged.Y;
+
+            contentBorderBounds = contentBorderBounds.Translate(differenceX, differenceY);
+            contentBounds = contentBounds.Translate(differenceX, differenceY);
+            headerBorderBounds = headerBorderBounds.Translate(differenceX, differenceY);
+
+            _contentBorder.SetBounds(contentBorderBounds);
+            if (Child != null) Child.Arrange(contentBounds);
+            if (!string.IsNullOrEmpty(Title)) _headerBorder.SetBounds(headerBorderBounds);
         }
 
         public override void Draw()

@@ -6,16 +6,18 @@ namespace Game2DFramework.MonoGame
 {
     class GridTest : InitializableState
     {
+        private GuiPanel _panel;
         private Frame _frame;
 
         protected override void OnEntered(object enterInformation)
         {
-            Game.GuiSystem.ArrangeCenteredToScreen(Game, _frame);
         }
 
         protected override void OnInitialize(object enterInformation)
         {
+            _panel = new GuiPanel(Game);
             _frame = Game.GuiSystem.CreateGuiHierarchyFromXml<Frame>("GuiSkin/GridFrame.xml");
+            _panel.AddElement(_frame);
         }
 
         public override void OnLeave()
@@ -24,14 +26,14 @@ namespace Game2DFramework.MonoGame
 
         public override StateChangeInformation OnUpdate(float elapsedTime)
         {
-            _frame.Update(elapsedTime);
+            _panel.Update(elapsedTime);
             return StateChangeInformation.Empty;
         }
 
         public override void OnDraw(float elapsedTime)
         {
             Game.GraphicsDevice.Clear(Color.Black);
-            _frame.Draw();
+            _panel.Draw();
         }
     }
 }

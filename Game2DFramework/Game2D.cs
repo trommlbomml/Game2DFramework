@@ -308,5 +308,10 @@ namespace Game2DFramework
             actionTimer.Start();
             _activeTimers.Add(actionTimer);
         }
+
+        public Rectangle GetScreenRectangle()
+        {
+            return new Rectangle(0,0,ScreenWidth, ScreenHeight);
+        }
     }
 }
