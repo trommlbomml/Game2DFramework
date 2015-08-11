@@ -152,10 +152,12 @@ namespace Game2DFramework.Gui
                 }
             }
 
-            var startY = target.Y;
+
+
+            var startY = Bounds.Y;
             for (var y = 0; y < _rowDefinitions.Count; y++)
             {
-                var startX = target.X;
+                var startX = Bounds.X;
 
                 for (var x = 0; x < _columnDefinitions.Count; x++)
                 {
