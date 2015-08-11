@@ -49,7 +49,7 @@ namespace Game2DFramework.Gui
 
             if (Child != null)
             {
-                var rectangle = target;
+                var rectangle = Bounds;
                 rectangle.X += _normalSprite.FixedBorder.Top;
                 rectangle.Y += _normalSprite.FixedBorder.Left;
                 rectangle.Width -= _normalSprite.FixedBorder.Vertical;

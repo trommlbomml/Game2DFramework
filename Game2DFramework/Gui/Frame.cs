@@ -76,10 +76,11 @@ namespace Game2DFramework.Gui
 
             var headerSize = GetHeaderSize();
             var childContentSize = Child == null ? Rectangle.Empty : Child.GetMinSize();
+            var topContentPadding = Math.Max(headerSize.Height/2, _contentBorder.FixedBorder.Top);
 
             var contentBorderBounds = new Rectangle(Bounds.X, Bounds.Y + headerSize.Height/2,
                 childContentSize.Width + _contentBorder.FixedBorder.Horizontal,
-                childContentSize.Height + _contentBorder.FixedBorder.Vertical);
+                childContentSize.Height + _contentBorder.FixedBorder.Bottom + topContentPadding);
 
             var headerBorderBounds = string.IsNullOrEmpty(Title)
                 ? contentBorderBounds
@@ -88,7 +89,7 @@ namespace Game2DFramework.Gui
 
             var contentBounds = childContentSize;
             contentBounds.X = contentBorderBounds.X + _contentBorder.FixedBorder.Left;
-            contentBounds.Y = contentBorderBounds.Y + Math.Max(headerSize.Height /2, _contentBorder.FixedBorder.Top);
+            contentBounds.Y = contentBorderBounds.Y + topContentPadding;
             
             var merged = Rectangle.Union(contentBorderBounds, headerBorderBounds);
             var arranged = ArrangeToAlignments(Bounds, merged);
