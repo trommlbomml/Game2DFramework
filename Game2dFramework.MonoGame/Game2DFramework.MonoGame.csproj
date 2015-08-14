@@ -48,6 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceNames.tt</DependentUpon>
     </Compile>
+    <Compile Include="ScrollViewerState.cs" />
     <Compile Include="StackPanelWithFrame.cs" />
     <Compile Include="StartState.cs" />
     <Compile Include="TestGame.cs" />
@@ -63,6 +64,9 @@
   <ItemGroup>
     <Content Include="GuiSkin\CustomSkinMenu.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GuiSkin\ScrollViewer.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="GuiSkin\GridFrame.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

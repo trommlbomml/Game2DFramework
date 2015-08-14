@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame Title="ScrollViewer">
+  <ScrollViewer CanScrollHorizontally="False" CanScrollVertically="True" Height="250">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+      </Grid.ColumnDefinitions>
+      <Image Grid.Row="0" Grid.Column="0" Source="smilie" Margin="1" />
+      <Image Grid.Row="0" Grid.Column="1" Source="smilie" Margin="1" />
+      <Image Grid.Row="0" Grid.Column="2" Source="smilie" Margin="1" />
+
+      <Image Grid.Row="1" Grid.Column="0" Source="smilie" Margin="1" />
+      <Image Grid.Row="1" Grid.Column="1" Source="smilie" Margin="1"/>
+      <Image Grid.Row="1" Grid.Column="2" Source="smilie" Margin="1" />
+
+      <Image Grid.Row="2" Grid.Column="0" Source="smilie" Margin="1" />
+      <Image Grid.Row="2" Grid.Column="1" Source="smilie" Margin="1" />
+      <Image Grid.Row="2" Grid.Column="2" Source="smilie" Margin="1" />
+
+      <Image Grid.Row="3" Grid.Column="0" Source="smilie" Margin="1" />
+      <Image Grid.Row="3" Grid.Column="1" Source="smilie" Margin="1" />
+      <Image Grid.Row="3" Grid.Column="2" Source="smilie" Margin="1" />
+
+      <Image Grid.Row="4" Grid.Column="0" Source="smilie" Margin="1" />
+      <Image Grid.Row="4" Grid.Column="1" Source="smilie" Margin="1" />
+      <Image Grid.Row="4" Grid.Column="2" Source="smilie" Margin="1" />
+
+      <Image Grid.Row="5" Grid.Column="0" Source="smilie" Margin="1" />
+      <Image Grid.Row="5" Grid.Column="1" Source="smilie" Margin="1" />
+      <Image Grid.Row="5" Grid.Column="2" Source="smilie" Margin="1" />
+    </Grid>
+  </ScrollViewer>
+</Frame>

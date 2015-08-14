@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Xml;
 using Game2DFramework.Drawing;
 using Game2DFramework.Gui.ItemDescriptors;
@@ -10,7 +11,6 @@ namespace Game2DFramework.Gui
     {
         private NinePatchSprite _normalSprite;
         private NinePatchSprite _hoverSprite;
-        private bool _isMouseOver;
 
         public event Action Click;
 
@@ -58,25 +58,33 @@ namespace Game2DFramework.Gui
             }
         }
 
-        public override void OnClick()
+        public override void OnMouseUp(EventHandler handler)
         {
             if (Click != null) Click();
         }
 
-        public override GuiElement OnMouseOver()
+        public override void OnMouseDown(EventHandler handler)
         {
-            _isMouseOver = true;
-            return this;
+            handler.Handled = true;
         }
 
-        public override void OnMouseLeft()
+        public override void OnMouseOver(EventHandler handler)
         {
-            _isMouseOver = false;
+            handler.Handled = true;
+        }
+
+        public override void OnMouseLeft(EventHandler handler)
+        {
+        }
+
+        public override void OnMouseMove(MouseMovedEventHandler handler)
+        {
+            Debug.WriteLine("MouseMove " + handler.X + "," + handler.Y);
         }
 
         public override void Draw()
         {
-            if (_isMouseOver)
+            if (IsMouseOver)
             {
                 _hoverSprite.Draw(Game.SpriteBatch);
             }

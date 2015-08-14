@@ -115,13 +115,13 @@ namespace Game2DFramework.Gui
             }
         }
 
-        public override GuiElement OnGotFocus()
+        public override void OnGotFocus(EventHandler handler)
         {
             _hasFocus = true;
-            return this;
+            handler.Handled = true;
         }
 
-        public override void OnFocusLost()
+        public override void OnFocusLost(EventHandler handler)
         {
             _hasFocus = false;
         }

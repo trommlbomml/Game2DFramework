@@ -89,6 +89,7 @@
     <Compile Include="Gui\ItemDescriptors\FrameSkinItemDescriptor.cs" />
     <Compile Include="Gui\ItemDescriptors\TextBlockSkinItemDescriptor.cs" />
     <Compile Include="Gui\ItemDescriptors\TextBoxSkinItemDescriptor.cs" />
+    <Compile Include="Gui\ScrollViewer.cs" />
     <Compile Include="Gui\SkinItemDescriptor.cs" />
     <Compile Include="Gui\StackPanel.cs" />
     <Compile Include="Gui\TextBlock.cs" />

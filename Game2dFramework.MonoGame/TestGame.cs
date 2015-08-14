@@ -32,6 +32,7 @@ namespace Game2DFramework.MonoGame
             RegisterState(new GridTest());
             RegisterState(new InputGuiTestState());
             RegisterState(new AnimationTest());
+            RegisterState(new ScrollViewerState());
             return typeof(AnimationTest);
         }
 

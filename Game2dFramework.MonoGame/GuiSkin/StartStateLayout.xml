@@ -10,5 +10,8 @@
     <Button Margin="4" Id="TextBoxTestButton">
       <TextBlock Text="Input Boxes" Margin="10,2" />
     </Button>
+    <Button Margin="4" Id="ScrollViewerTestButton">
+    <TextBlock Text="Scroll Viewer" Margin="10,2" />
+    </Button>
   </StackPanel>
 </Frame>

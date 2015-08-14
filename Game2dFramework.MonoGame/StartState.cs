@@ -25,6 +25,7 @@ namespace Game2DFramework.MonoGame
             SetButtonTransitionTo(root, "StackPanelWithFrameButton", typeof(StackPanelWithFrame));
             SetButtonTransitionTo(root, "GridTestButton", typeof(GridTest));
             SetButtonTransitionTo(root, "TextBoxTestButton", typeof(InputGuiTestState));
+            SetButtonTransitionTo(root, "ScrollViewerTestButton", typeof(ScrollViewerState));
         }
 
         private void SetButtonTransitionTo(GuiElement root, string buttonId, Type targetState)

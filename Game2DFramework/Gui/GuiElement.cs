@@ -5,6 +5,17 @@ using Microsoft.Xna.Framework;
 
 namespace Game2DFramework.Gui
 {
+    public class EventHandler
+    {
+        public bool Handled { get; set; }
+    }
+
+    public class MouseMovedEventHandler : EventHandler
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
+
     public abstract class GuiElement : GameObject
     {
         private bool _isActive;
@@ -23,6 +34,8 @@ namespace Game2DFramework.Gui
             }
         }
 
+        public bool IsMouseOver { get; internal set; }
+
         protected GuiSystem GuiSystem { get; private set; }
 
         public static GuiElement CreateFromXmlType(GuiSystem guiSystem, XmlElement element)
@@ -36,6 +49,7 @@ namespace Game2DFramework.Gui
                 case "Grid": return new Grid(guiSystem, element);
                 case "Button": return new Button(guiSystem, element);
                 case "TextBox": return new TextBox(guiSystem, element);
+                case "ScrollViewer": return new ScrollViewer(guiSystem, element);
             }
 
             throw new ArgumentException("Invalid Element Type", "element");
@@ -61,7 +75,7 @@ namespace Game2DFramework.Gui
             IsActive = true;
 
             if (element.HasAttribute("Width")) Width = int.Parse(element.GetAttribute("Width"));
-            if (element.HasAttribute("Height")) Width = int.Parse(element.GetAttribute("Height"));
+            if (element.HasAttribute("Height")) Height = int.Parse(element.GetAttribute("Height"));
             if (element.HasAttribute("Margin")) Margin = Thickness.Parse(element.GetAttribute("Margin"));
             if (element.HasAttribute("Id")) Id = element.GetAttribute("Id");
             if (element.HasAttribute("HorizontalAlignment"))
@@ -124,31 +138,6 @@ namespace Game2DFramework.Gui
 
         public abstract void Arrange(Rectangle target);
 
-        public virtual void OnClick()
-        {
-            
-        }
-
-        public virtual GuiElement OnGotFocus()
-        {
-            if (Children.Count == 0) return null;
-
-            foreach (var guiElement in Children)
-            {
-                if (guiElement.Bounds.Contains(Game.Mouse.X, Game.Mouse.Y))
-                {
-                    return guiElement.OnGotFocus();
-                }
-            }
-
-            return null;
-        }
-
-        public virtual void OnFocusLost()
-        {
-            
-        }
-
         internal Rectangle ArrangeToAlignments(Rectangle availableBounds, Rectangle elementBounds)
         {
             var finalRectangle = new Rectangle(0,0,elementBounds.Width, elementBounds.Height);
@@ -186,23 +175,36 @@ namespace Game2DFramework.Gui
             return finalRectangle;
         }
 
-        public virtual GuiElement OnMouseOver()
+        public virtual void OnGotFocus(EventHandler handler)
         {
-            if (Children.Count == 0) return null;
-            
-            foreach (var guiElement in Children)
-            {
-                if (guiElement.Bounds.Contains(Game.Mouse.X, Game.Mouse.Y))
-                {
-                    return guiElement.OnMouseOver();
-                }
-            }
-
-            return null;
         }
 
-        public virtual void OnMouseLeft()
+        public virtual void OnFocusLost(EventHandler handler)
         {
+
+        }
+
+        public virtual void OnMouseOver(EventHandler handler)
+        {
+        }
+
+        public virtual void OnMouseLeft(EventHandler handler)
+        {
+        }
+
+        public virtual void OnMouseDown(EventHandler handler)
+        {
+            
+        }
+
+        public virtual void OnMouseUp(EventHandler handler)
+        {
+           
+        }
+
+        public virtual void OnMouseMove(MouseMovedEventHandler handler)
+        {
+            
         }
     }
 }
