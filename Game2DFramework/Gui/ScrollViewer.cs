@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Xml;
+using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,14 +10,11 @@ namespace Game2DFramework.Gui
     {
         public bool CanScrollHorizontally { get; set; }
         public bool CanScrollVertically { get; set; }
-        public int ScrollOffsetX { get; set; }
-        public int ScrollOffsetY { get; set; }
 
         private RasterizerState _scissorTestRasterizerState;
         private Rectangle _clientClipBounds;
-        private float _scrollPixelsPerSlideUnitY;
         private bool _isOverScrollbar;
-        private int _maxScrollY;
+        private ScrollRepresenter _verticalScrollRepresenter;
 
         public ScrollViewer(GuiSystem guiSystem) : base(guiSystem)
         {
@@ -38,6 +35,8 @@ namespace Game2DFramework.Gui
                 ScissorTestEnable = true,
                 SlopeScaleDepthBias = original.SlopeScaleDepthBias,
             };
+
+            _verticalScrollRepresenter = new ScrollRepresenter();
         }
 
         public ScrollViewer(GuiSystem guiSystem, XmlElement element) : base(guiSystem, element)
@@ -83,22 +82,18 @@ namespace Game2DFramework.Gui
             _clientClipBounds.Width -= CanScrollVertically ? SliderSize : 0;
             _clientClipBounds.Height -= CanScrollHorizontally ? SliderSize : 0;
 
-            if (Child != null)
-            {
-                Child.Arrange(childArrange);
-            }
+            if (Child != null) Child.Arrange(childArrange);
 
             if (CanScrollVertically)
             {
-                _maxScrollY = childArrange.Height - _clientClipBounds.Height;
-                var scrollableAreaY = _clientClipBounds.Height/4*3;
+                _verticalScrollRepresenter.SetRange(_clientClipBounds.Height, childArrange.Height, SliderSize);
+            }
+        }
 
-                _scrollPixelsPerSlideUnitY = _maxScrollY / (float)scrollableAreaY;
-            }
-            else
-            {
-                _scrollPixelsPerSlideUnitY = 0;
-            }
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x,y);
+            if (Child != null) Child.Translate(x,y);
         }
 
         public override void Draw()
@@ -110,11 +105,11 @@ namespace Game2DFramework.Gui
 
             graphicsDevice.ScissorRectangle = _clientClipBounds;
 
-            var translationY = (float)Math.Round(ScrollOffsetY*_scrollPixelsPerSlideUnitY);
-            Debug.WriteLine("Translation: " + translationY);
-            spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(ScrollOffsetX, -translationY, 0.0f), rasterizerState: _scissorTestRasterizerState);
+            spriteBatch.Begin(rasterizerState: _scissorTestRasterizerState);
+            if (Child != null) Child.Translate(0, -_verticalScrollRepresenter.ScrollValueCalculated);
             base.Draw();
             spriteBatch.End();
+            if (Child != null) Child.Translate(0, _verticalScrollRepresenter.ScrollValueCalculated);
 
             spriteBatch.Begin();
 
@@ -124,13 +119,13 @@ namespace Game2DFramework.Gui
 
                 var thumb = GetThumbRectangleVertical();
 
-                Game.ShapeRenderer.DrawFilledRectangle(thumb.X, thumb.Y + ScrollOffsetY, thumb.Width, thumb.Height, Color.Blue);
+                Game.ShapeRenderer.DrawFilledRectangle(thumb.X, thumb.Y, thumb.Width, thumb.Height, Color.Blue);
             }
         }
 
         private Rectangle GetThumbRectangleVertical()
         {
-            return new Rectangle(_clientClipBounds.Right + 1, _clientClipBounds.Top, SliderSize, _clientClipBounds.Height / 4);
+            return new Rectangle(_clientClipBounds.Right + 1, _clientClipBounds.Top + _verticalScrollRepresenter.ScrollValueDisplayed, SliderSize, SliderSize);
         }
 
         public override void OnMouseLeft(EventHandler handler)
@@ -155,7 +150,7 @@ namespace Game2DFramework.Gui
         public override void OnMouseMove(MouseMovedEventHandler handler)
         {
             if (!_isOverScrollbar) return;
-            ScrollOffsetY = MathHelper.Clamp(ScrollOffsetY + handler.Y, 0, _maxScrollY);
+            _verticalScrollRepresenter.Scroll(handler.Y);
         }
 
         public override void OnMouseUp(EventHandler handler)

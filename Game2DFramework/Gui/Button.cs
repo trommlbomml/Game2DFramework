@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Xml;
 using Game2DFramework.Drawing;
+using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Microsoft.Xna.Framework;
 
@@ -56,6 +57,15 @@ namespace Game2DFramework.Gui
                 rectangle.Height -= _normalSprite.FixedBorder.Vertical;
                 Child.Arrange(rectangle);
             }
+        }
+
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            _normalSprite.SetBounds(_normalSprite.Bounds.Translate(x,y));
+            _hoverSprite.SetBounds(_normalSprite.Bounds);
+
+            if (Child!= null) Child.Translate(x,y);
         }
 
         public override void OnMouseUp(EventHandler handler)

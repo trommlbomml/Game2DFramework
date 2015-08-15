@@ -106,6 +106,14 @@ namespace Game2DFramework.Gui
             if (!string.IsNullOrEmpty(Title)) _headerBorder.SetBounds(headerBorderBounds);
         }
 
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            _headerBorder.SetBounds(_headerBorder.Bounds.Translate(x,y));
+            _contentBorder.SetBounds(_contentBorder.Bounds.Translate(x, y));
+            if (Child != null) Child.Translate(x,y);
+        }
+
         public override void Draw()
         {
             _contentBorder.Draw(Game.SpriteBatch);

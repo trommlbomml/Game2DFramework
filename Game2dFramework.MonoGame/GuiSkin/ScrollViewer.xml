@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Frame Title="ScrollViewer">
-  <ScrollViewer CanScrollHorizontally="False" CanScrollVertically="True" Height="250">
+  <ScrollViewer CanScrollHorizontally="False" CanScrollVertically="True" Height="200">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
@@ -15,29 +15,41 @@
         <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="auto" />
       </Grid.ColumnDefinitions>
-      <Image Grid.Row="0" Grid.Column="0" Source="smilie" Margin="1" />
-      <Image Grid.Row="0" Grid.Column="1" Source="smilie" Margin="1" />
-      <Image Grid.Row="0" Grid.Column="2" Source="smilie" Margin="1" />
+      <TextBlock Text="Peters Game" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" />
+      <TextBlock Text="1/4" Grid.Column="1" Grid.Row="0" />
+      <Button Grid.Column="2" Grid.Row="0">
+        <TextBlock Text="Join" />
+      </Button>
 
-      <Image Grid.Row="1" Grid.Column="0" Source="smilie" Margin="1" />
-      <Image Grid.Row="1" Grid.Column="1" Source="smilie" Margin="1"/>
-      <Image Grid.Row="1" Grid.Column="2" Source="smilie" Margin="1" />
+      <TextBlock Text="Hanni" Grid.Column="0" Grid.Row="1" Margin="2" HorizontalAlignment="Left"/>
+      <TextBlock Text="3/4" Grid.Column="1" Grid.Row="1" Margin="2"/>
+      <Button Grid.Column="2" Grid.Row="1" Margin="2">
+        <TextBlock Text="Join" />
+      </Button>
 
-      <Image Grid.Row="2" Grid.Column="0" Source="smilie" Margin="1" />
-      <Image Grid.Row="2" Grid.Column="1" Source="smilie" Margin="1" />
-      <Image Grid.Row="2" Grid.Column="2" Source="smilie" Margin="1" />
+      <TextBlock Text="Test" Grid.Column="0" Grid.Row="2" Margin="2" HorizontalAlignment="Left"/>
+      <TextBlock Text="3/4" Grid.Column="1" Grid.Row="2" Margin="2"/>
+      <Button Grid.Column="2" Grid.Row="2" Margin="2">
+        <TextBlock Text="Join" />
+      </Button>
 
-      <Image Grid.Row="3" Grid.Column="0" Source="smilie" Margin="1" />
-      <Image Grid.Row="3" Grid.Column="1" Source="smilie" Margin="1" />
-      <Image Grid.Row="3" Grid.Column="2" Source="smilie" Margin="1" />
+      <TextBlock Text="Blubb" Grid.Column="0" Grid.Row="3" Margin="2" HorizontalAlignment="Left"/>
+      <TextBlock Text="4/4" Grid.Column="1" Grid.Row="3" Margin="2"/>
+      <Button Grid.Column="2" Grid.Row="3" Margin="2">
+        <TextBlock Text="View" />
+      </Button>
 
-      <Image Grid.Row="4" Grid.Column="0" Source="smilie" Margin="1" />
-      <Image Grid.Row="4" Grid.Column="1" Source="smilie" Margin="1" />
-      <Image Grid.Row="4" Grid.Column="2" Source="smilie" Margin="1" />
+      <TextBlock Text="DeathDay" Grid.Column="0" Grid.Row="4" Margin="2" HorizontalAlignment="Left"/>
+      <TextBlock Text="2/4" Grid.Column="1" Grid.Row="4" Margin="2"/>
+      <Button Grid.Column="2" Grid.Row="4" Margin="2">
+        <TextBlock Text="Join" />
+      </Button>
 
-      <Image Grid.Row="5" Grid.Column="0" Source="smilie" Margin="1" />
-      <Image Grid.Row="5" Grid.Column="1" Source="smilie" Margin="1" />
-      <Image Grid.Row="5" Grid.Column="2" Source="smilie" Margin="1" />
+      <TextBlock Text="HollowMan" Grid.Column="0" Grid.Row="5" Margin="2" HorizontalAlignment="Left"/>
+      <TextBlock Text="1/4" Grid.Column="1" Grid.Row="5" Margin="2"/>
+      <Button Grid.Column="2" Grid.Row="5" Margin="2">
+        <TextBlock Text="Join" />
+      </Button>
     </Grid>
   </ScrollViewer>
 </Frame>

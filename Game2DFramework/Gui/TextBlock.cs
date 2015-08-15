@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Xml;
 using Game2DFramework.Drawing;
+using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Microsoft.Xna.Framework;
 
@@ -67,6 +68,12 @@ namespace Game2DFramework.Gui
         {
             Bounds = RemoveMargin(target);
             _spriteText.SetTargetRectangle(Bounds);
+        }
+
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            _spriteText.SetTargetRectangle(_spriteText.TargetRectangle.Translate(x, y));
         }
 
         public override void Draw()

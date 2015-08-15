@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using Game2DFramework.Drawing;
+using Game2DFramework.Extensions;
 using Game2DFramework.Gui.ItemDescriptors;
 using Game2DFramework.Interaction;
 using Microsoft.Xna.Framework;
@@ -113,6 +114,13 @@ namespace Game2DFramework.Gui
                 var bounds = _spriteText.GetBounds(true);
                 Game.ShapeRenderer.DrawRectangle(bounds.Right + 1, bounds.Y, 1, bounds.Height, Color.White);
             }
+        }
+
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            _border.SetBounds(_border.Bounds.Translate(x,y));
+            _spriteText.SetTargetRectangle(_spriteText.TargetRectangle.Translate(x,y));
         }
 
         public override void OnGotFocus(EventHandler handler)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Game2DFramework.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace Game2DFramework.Gui
@@ -169,6 +170,15 @@ namespace Game2DFramework.Gui
                 }
 
                 startY += rowHeights[y];
+            }
+        }
+
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            foreach (var child in Children)
+            {
+                child.Translate(x,y);
             }
         }
 

@@ -113,6 +113,12 @@ namespace Game2DFramework.Gui
             }
         }
 
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            foreach(var child in Children) child.Translate(x,y);
+        }
+
         public void AddChild(GuiElement child)
         {
             Children.Add(child);

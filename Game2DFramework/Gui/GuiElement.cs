@@ -175,6 +175,8 @@ namespace Game2DFramework.Gui
             return finalRectangle;
         }
 
+        public abstract void Translate(int x, int y);
+
         public virtual void OnGotFocus(EventHandler handler)
         {
         }

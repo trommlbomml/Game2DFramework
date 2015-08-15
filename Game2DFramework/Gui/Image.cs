@@ -41,6 +41,13 @@ namespace Game2DFramework.Gui
             _position = Bounds.Center.ToVector2();
         }
 
+        public override void Translate(int x, int y)
+        {
+            Bounds = Bounds.Translate(x, y);
+            _position.X += x;
+            _position.Y += y;
+        }
+
         public override void Draw()
         {
             if(Texture == null) return;
