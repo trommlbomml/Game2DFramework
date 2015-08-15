@@ -15,6 +15,7 @@ namespace Game2DFramework.Gui
         private Rectangle _clientClipBounds;
         private bool _isOverScrollbar;
         private ScrollRepresenter _verticalScrollRepresenter;
+        private ScrollRepresenter _horizontalScrollRepresenter;
 
         public ScrollViewer(GuiSystem guiSystem) : base(guiSystem)
         {
@@ -37,6 +38,7 @@ namespace Game2DFramework.Gui
             };
 
             _verticalScrollRepresenter = new ScrollRepresenter();
+            _horizontalScrollRepresenter = new ScrollRepresenter();
         }
 
         public ScrollViewer(GuiSystem guiSystem, XmlElement element) : base(guiSystem, element)
@@ -82,12 +84,25 @@ namespace Game2DFramework.Gui
             _clientClipBounds.Width -= CanScrollVertically ? SliderSize : 0;
             _clientClipBounds.Height -= CanScrollHorizontally ? SliderSize : 0;
 
-            if (Child != null) Child.Arrange(childArrange);
-
             if (CanScrollVertically)
             {
                 _verticalScrollRepresenter.SetRange(_clientClipBounds.Height, childArrange.Height, SliderSize);
+                if (!_verticalScrollRepresenter.CanContentScroll)
+                {
+                    _clientClipBounds.Width += SliderSize;
+                }
             }
+
+            if (CanScrollHorizontally)
+            {
+                _horizontalScrollRepresenter.SetRange(_clientClipBounds.Width, childArrange.Width, SliderSize);
+                if (!_horizontalScrollRepresenter.CanContentScroll)
+                {
+                    _clientClipBounds.Height += SliderSize;
+                }
+            }
+
+            if (Child != null) Child.Arrange(childArrange);
         }
 
         public override void Translate(int x, int y)
@@ -98,22 +113,9 @@ namespace Game2DFramework.Gui
 
         public override void Draw()
         {
-            var spriteBatch = Game.SpriteBatch;
-            var graphicsDevice = Game.GraphicsDevice;
-            
-            spriteBatch.End();
+            DrawContentWithScissoring();
 
-            graphicsDevice.ScissorRectangle = _clientClipBounds;
-
-            spriteBatch.Begin(rasterizerState: _scissorTestRasterizerState);
-            if (Child != null) Child.Translate(0, -_verticalScrollRepresenter.ScrollValueCalculated);
-            base.Draw();
-            spriteBatch.End();
-            if (Child != null) Child.Translate(0, _verticalScrollRepresenter.ScrollValueCalculated);
-
-            spriteBatch.Begin();
-
-            if (CanScrollVertically)
+            if (CanScrollVertically && _verticalScrollRepresenter.CanContentScroll)
             {
                 Game.ShapeRenderer.DrawFilledRectangle(_clientClipBounds.Right + 1, _clientClipBounds.Top, SliderSize, _clientClipBounds.Height, Color.Red);
 
@@ -121,11 +123,53 @@ namespace Game2DFramework.Gui
 
                 Game.ShapeRenderer.DrawFilledRectangle(thumb.X, thumb.Y, thumb.Width, thumb.Height, Color.Blue);
             }
+
+            if (CanScrollHorizontally && _horizontalScrollRepresenter.CanContentScroll)
+            {
+                Game.ShapeRenderer.DrawFilledRectangle(_clientClipBounds.Left, _clientClipBounds.Bottom - SliderSize, _clientClipBounds.Width, SliderSize, Color.Red);
+
+                var thumb = GetThumbRectangleHorizontal();
+
+                Game.ShapeRenderer.DrawFilledRectangle(thumb.X, thumb.Y, thumb.Width, thumb.Height, Color.Blue);
+            }
+        }
+
+        private void DrawContentWithScissoring()
+        {
+            var spriteBatch = Game.SpriteBatch;
+            var graphicsDevice = Game.GraphicsDevice;
+
+            spriteBatch.End();
+
+            graphicsDevice.ScissorRectangle = _clientClipBounds;
+
+            spriteBatch.Begin(rasterizerState: _scissorTestRasterizerState);
+            if (Child != null)
+            {
+                Child.Translate(-_horizontalScrollRepresenter.ScrollValueCalculated,
+                    -_verticalScrollRepresenter.ScrollValueCalculated);
+            }
+            base.Draw();
+            spriteBatch.End();
+            if (Child != null)
+            {
+                Child.Translate(_horizontalScrollRepresenter.ScrollValueCalculated,
+                    _verticalScrollRepresenter.ScrollValueCalculated);
+            }
+
+            spriteBatch.Begin();
         }
 
         private Rectangle GetThumbRectangleVertical()
         {
-            return new Rectangle(_clientClipBounds.Right + 1, _clientClipBounds.Top + _verticalScrollRepresenter.ScrollValueDisplayed, SliderSize, SliderSize);
+            return new Rectangle(_clientClipBounds.Right + 1, _clientClipBounds.Top + _verticalScrollRepresenter.ScrollValueDisplayed, SliderSize, _verticalScrollRepresenter.ThumbSize);
+        }
+
+        private Rectangle GetThumbRectangleHorizontal()
+        {
+            return new Rectangle(_clientClipBounds.Left + _verticalScrollRepresenter.ScrollValueDisplayed,
+                                 _clientClipBounds.Bottom - SliderSize,
+                                 _verticalScrollRepresenter.ThumbSize, SliderSize);
         }
 
         public override void OnMouseLeft(EventHandler handler)

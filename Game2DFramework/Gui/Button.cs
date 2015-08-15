@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Xml;
 using Game2DFramework.Drawing;
 using Game2DFramework.Extensions;
@@ -81,15 +80,6 @@ namespace Game2DFramework.Gui
         public override void OnMouseOver(EventHandler handler)
         {
             handler.Handled = true;
-        }
-
-        public override void OnMouseLeft(EventHandler handler)
-        {
-        }
-
-        public override void OnMouseMove(MouseMovedEventHandler handler)
-        {
-            Debug.WriteLine("MouseMove " + handler.X + "," + handler.Y);
         }
 
         public override void Draw()

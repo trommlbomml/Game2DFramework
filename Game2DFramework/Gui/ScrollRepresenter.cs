@@ -16,11 +16,20 @@ namespace Game2DFramework.Gui
 
         public int ScrollValueDisplayed { get; private set; }
         public int ScrollValueCalculated { get; private set; }
+        public int ThumbSize { get; private set; }
+        public bool CanContentScroll { get { return _maxScrollY > 0; } }
 
-        public void SetRange(int scrollableArea, int contentSize, int thumbSize)
+        public void SetRange(int scrollableArea, int contentSize, int minThumbSize)
         {
-            _maxScrollY = scrollableArea - thumbSize;
+            _maxScrollY = scrollableArea - minThumbSize;
             var invisibleSize = contentSize - scrollableArea;
+
+            if (invisibleSize < _maxScrollY)
+            {
+                _maxScrollY = invisibleSize;
+                ThumbSize = scrollableArea - _maxScrollY;
+            }
+
             _scrollCalculatedPerDisplayed = invisibleSize / (float)_maxScrollY;
             
         }
