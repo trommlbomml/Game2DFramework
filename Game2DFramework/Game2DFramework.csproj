@@ -76,6 +76,23 @@
     <Compile Include="Game2D.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameProperty.cs" />
+    <Compile Include="Gui2\Animations\UiAlphaAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiColorAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiCustomDeltaAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiMultiAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiOffsetAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiRotationAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiScaleAnimation.cs" />
+    <Compile Include="Gui2\Controls\Image.cs" />
+    <Compile Include="Gui2\Controls\StaticText.cs" />
+    <Compile Include="Gui2\OverlayInputController.cs" />
+    <Compile Include="Gui2\OverlayInputControllerBase.cs" />
+    <Compile Include="Gui2\UiCompoundElement.cs" />
+    <Compile Include="Gui2\UiElement.cs" />
+    <Compile Include="Gui2\UiFocusContainer.cs" />
+    <Compile Include="Gui2\UiOverlay.cs" />
+    <Compile Include="Gui2\UiState.cs" />
     <Compile Include="Gui\Button.cs" />
     <Compile Include="Gui\ContentControl.cs" />
     <Compile Include="Gui\Frame.cs" />
@@ -129,9 +146,7 @@
     <Compile Include="States\Transitions\ThrowAwayTransition.cs" />
     <Compile Include="States\Transitions\ZappoutTransition.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Gui2\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
