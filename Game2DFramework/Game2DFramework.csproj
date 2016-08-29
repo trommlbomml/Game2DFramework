@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Game2DFramework</RootNamespace>
     <AssemblyName>Game2DFramework</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,9 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.4.0.456, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +67,7 @@
     <Compile Include="Drawing\ShapeRenderer.cs" />
     <Compile Include="Drawing\Sprite.cs" />
     <Compile Include="Drawing\SpriteText.cs" />
+    <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Extensions\StringParseExtension.cs" />
@@ -101,11 +103,13 @@
     <Compile Include="Input\KeyboardEx.cs" />
     <Compile Include="Input\MouseEx.cs" />
     <Compile Include="Interaction\ActionTimer.cs" />
-    <Compile Include="Interaction\Animation.cs" />
-    <Compile Include="Interaction\Animator.cs" />
+    <Compile Include="Animations\Animation.cs" />
+    <Compile Include="Animations\Animator.cs" />
+    <Compile Include="Animations\DeltaAnimation.cs" />
+    <Compile Include="Animations\DiscreteAnimation.cs" />
     <Compile Include="Interaction\InputType.cs" />
-    <Compile Include="Interaction\Storyboard.cs" />
     <Compile Include="Interaction\StringInputController.cs" />
+    <Compile Include="Animations\WaitAnimation.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +128,12 @@
     <Compile Include="States\Transitions\SlideTransition.cs" />
     <Compile Include="States\Transitions\ThrowAwayTransition.cs" />
     <Compile Include="States\Transitions\ZappoutTransition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Gui2\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
