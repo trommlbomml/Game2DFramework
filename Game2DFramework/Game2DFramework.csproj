@@ -32,8 +32,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MonoGame.Framework.WindowsDX.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,11 +80,13 @@
     <Compile Include="Gui2\Animations\UiAnimation.cs" />
     <Compile Include="Gui2\Animations\UiColorAnimation.cs" />
     <Compile Include="Gui2\Animations\UiCustomDeltaAnimation.cs" />
+    <Compile Include="Gui2\Animations\UiDiscreteAnimation.cs" />
     <Compile Include="Gui2\Animations\UiMultiAnimation.cs" />
     <Compile Include="Gui2\Animations\UiOffsetAnimation.cs" />
     <Compile Include="Gui2\Animations\UiRotationAnimation.cs" />
     <Compile Include="Gui2\Animations\UiScaleAnimation.cs" />
     <Compile Include="Gui2\Controls\Image.cs" />
+    <Compile Include="Gui2\Controls\NinePatchImage.cs" />
     <Compile Include="Gui2\Controls\StaticText.cs" />
     <Compile Include="Gui2\OverlayInputController.cs" />
     <Compile Include="Gui2\OverlayInputControllerBase.cs" />

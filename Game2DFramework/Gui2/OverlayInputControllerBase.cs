@@ -26,5 +26,6 @@ namespace Game2DFramework.Gui2
         public event Action<UiElement> OnAction;
         public event Action MoveToNextElement;
         public event Action MoveToPreviousElement;
+        public event Action<UiElement> MoveToElement;
     }
 }

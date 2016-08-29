@@ -28,5 +28,10 @@ namespace Game2DFramework.Gui2
         /// Fire this event when to move to the previous element by tab index.
         /// </summary>
         event Action MoveToPreviousElement;
+
+        /// <summary>
+        /// Sets focus to element.
+        /// </summary>
+        event Action<UiElement> MoveToElement;
     }
 }

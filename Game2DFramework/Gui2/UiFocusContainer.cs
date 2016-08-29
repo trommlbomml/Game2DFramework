@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
@@ -26,6 +27,7 @@ namespace Game2DFramework.Gui2
         public UiFocusContainer()
         {
             _interactableElements = new List<UiElement>();
+            UiElements = new ReadOnlyCollection<UiElement>(_interactableElements);
             InputControllers = new List<OverlayInputController>();
             CurrentElement = null;
         }
@@ -45,6 +47,7 @@ namespace Game2DFramework.Gui2
             controller.MoveToNextElement += ControllerOnMoveToNextElement;
             controller.MoveToPreviousElement += ControllerOnMoveToPreviousElement;
             controller.OnAction += ControllerOnOnAction;
+            controller.MoveToElement += ControllerOnMoveToElement;
 
             InputControllers.Add(controller);
         }
@@ -87,7 +90,7 @@ namespace Game2DFramework.Gui2
             _rearrangeList = false;
         }
 
-        public void ControllerOnMoveToPreviousElement()
+        private void ControllerOnMoveToPreviousElement()
         {
             var lastElement = CurrentElement;
             if (CurrentElement == null)
@@ -131,6 +134,18 @@ namespace Game2DFramework.Gui2
                 CurrentElement?.Focus();
             }
         }
+
+        private void ControllerOnMoveToElement(UiElement uiElement)
+        {
+            if(CurrentElement != uiElement)
+            {
+                CurrentElement?.Unfocus();
+                CurrentElement = uiElement;
+                CurrentElement.Focus();
+            }
+        }
+
+        public ReadOnlyCollection<UiElement> UiElements { get; private set; }
         
         public virtual void Update(GameTime gameTime)
         {
