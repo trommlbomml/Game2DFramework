@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Game2DFramework.Animations
 {
-    internal class WaitAnimation : Animation
+    public class WaitAnimation : Animation
     {
         public WaitAnimation(float durationSeconds) : base(durationSeconds, false)
         {

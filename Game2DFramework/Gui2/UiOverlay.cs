@@ -35,6 +35,30 @@ namespace Game2DFramework.Gui2
             return element;
         }
 
+        public void Center(Rectangle bounds, bool vertical, bool horizontal)
+        {
+            var minX = int.MaxValue;
+            var maxX = int.MinValue;
+            var minY = int.MaxValue;
+            var maxY = int.MinValue;
+
+            foreach(var element in _uiElements)
+            {
+                minX = Math.Min(minX, element.Bounds.Left);
+                maxX = Math.Max(maxX, element.Bounds.Right);
+                minY = Math.Min(minY, element.Bounds.Top);
+                maxY = Math.Max(maxY, element.Bounds.Bottom);
+            }
+
+            var offsetX = horizontal ? bounds.X + bounds.Width / 2 - (maxX - minX) / 2 - minX : 0;
+            var offsetY = vertical ? bounds.Y + bounds.Height / 2 - (maxY - minY) / 2 - minY : 0;
+
+            foreach (var element in _uiElements)
+            {
+                element.Translate(offsetX, offsetY);
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -88,7 +112,6 @@ namespace Game2DFramework.Gui2
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             for (var i = 0; i < _uiElements.Count; i++)
             {
                 var uiBaseElement = _uiElements[i];
@@ -96,7 +119,6 @@ namespace Game2DFramework.Gui2
             }
 
             if (_currentModalElement != null && _currentModalElement.State != UiState.Inactive) _currentModalElement?.Draw(spriteBatch);
-            spriteBatch.End();
         }
     }
 }

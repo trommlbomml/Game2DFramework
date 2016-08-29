@@ -171,6 +171,7 @@ namespace Game2DFramework.Gui2
             if (FocusedAnimation != null)
             {
                 _animator.SetAnimation("Focused");
+                if (FocusedAnimation.IsLoop) State = UiState.Focused;
             }
             else
             {
@@ -186,6 +187,7 @@ namespace Game2DFramework.Gui2
             if (FocusedAnimation != null)
             {
                 _animator.SetAnimation("Focused", true);
+                if (FocusedAnimation.IsLoop) State = UiState.Active;
             }
             else
             {
@@ -217,6 +219,14 @@ namespace Game2DFramework.Gui2
             bounds.X += (int)(Offset.X);
             bounds.Y += (int)(Offset.Y);
             return bounds;
+        }
+
+        internal void Translate(int x, int y)
+        {
+            var bounds = Bounds;
+            bounds.X += x;
+            bounds.Y += y;
+            Bounds = bounds;
         }
 
         public void SetPosition(Vector2 position)

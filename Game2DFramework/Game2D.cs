@@ -284,7 +284,7 @@ namespace Game2DFramework
                 if (_gamePad != null) GamePad.Update();   
             }
 
-            if (!_stateManager.Update(elapsedTime)) Exit();
+            if(!_stateManager.Update(elapsedTime)) Exit();
             
             base.Update(gameTime);
         }
